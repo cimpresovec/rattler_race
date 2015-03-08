@@ -1,24 +1,47 @@
 #include <SFML/Graphics.hpp>
+#include "mainMenu.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(800, 600), "Rattler Race");
+    sf::Event *event = new sf::Event();
 
-    while (window.isOpen())
+    window->setFramerateLimit(60);
+
+    GameScene *current_scene = new MainMenu();
+    bool game_loop = true;
+
+    while (game_loop)
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        //Event handling
+        current_scene->handleInput(window, event);
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        //Logic
+        current_scene->handleLogic();
+
+        //Render
+        current_scene->handleRender(window);
+
+        //Scene switching
+        if (current_scene->next_scene != none)
+        {
+            switch (current_scene->next_scene)
+            {
+            case quit:
+            {
+                game_loop = false;
+                delete current_scene;
+                break;
+            }
+            default:
+                break;
+            }
+        }
     }
+
+    //Clean up
+    delete window;
+    delete event;
 
     return 0;
 }
