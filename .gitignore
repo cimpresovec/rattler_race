@@ -1,3 +1,8 @@
+#Custom
+*.user
+Makefile
+rattler_race
+
 # Compiled Object files
 *.slo
 *.lo
