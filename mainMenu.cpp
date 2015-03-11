@@ -1,7 +1,8 @@
 #include "mainMenu.h"
 
-MainMenu::MainMenu()
+MainMenu::MainMenu(AssetManager *manager)
 {
+    asset_manager = manager;
     next_scene = none;
 }
 
@@ -32,6 +33,7 @@ void MainMenu::handleRender(sf::RenderWindow *window)
     window->clear();
 
     sf::RectangleShape durka(sf::Vector2f(300, 200));
+    durka.setTexture(asset_manager->getTexture("assets/image.png"));
     durka.setPosition(100, 100);
     window->draw(durka);
 

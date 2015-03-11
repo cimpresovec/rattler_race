@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "assetManager.h"
+
 //Game scenes
 enum GameSceneType
 {
@@ -16,6 +18,7 @@ class GameScene
 {
 public:
     GameSceneType next_scene;
+    AssetManager *asset_manager;
 
     virtual ~GameScene() {}
 

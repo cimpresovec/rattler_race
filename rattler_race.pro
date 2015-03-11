@@ -6,9 +6,11 @@ CONFIG -= qt
 LIBS += -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 
 SOURCES += main.cpp \
-    mainMenu.cpp
+    mainMenu.cpp \
+    assetManager.cpp
 
 HEADERS += \
     gameScene.h \
-    mainMenu.h
+    mainMenu.h \
+    assetManager.h
 

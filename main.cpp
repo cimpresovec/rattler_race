@@ -1,14 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include "mainMenu.h"
+#include "assetManager.h"
 
 int main()
 {
     sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(800, 600), "Rattler Race");
     sf::Event *event = new sf::Event();
 
+    //Asset manager
+    //Image, fonts, sounds should only be loaded once, and then used where needed
+    AssetManager *asset_manager = new AssetManager();
+    asset_manager->loadTexture("assets/image.png");
+
     window->setFramerateLimit(60);
 
-    GameScene *current_scene = new MainMenu();
+    GameScene *current_scene = new MainMenu(asset_manager);
     bool game_loop = true;
 
     while (game_loop)
@@ -42,6 +48,7 @@ int main()
     //Clean up
     delete window;
     delete event;
+    delete asset_manager;
 
     return 0;
 }
