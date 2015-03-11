@@ -4,6 +4,11 @@
 
 AssetManager::AssetManager()
 {
+    font = new sf::Font();
+    if (!font->loadFromFile("assets/Ubuntu-L.ttf"))
+    {
+        std::cerr << "Can't load font: Ubuntu-L.ttf\n";
+    }
 }
 
 AssetManager::~AssetManager()
@@ -13,6 +18,8 @@ AssetManager::~AssetManager()
         delete it->second;
     }
     textures.clear();
+
+    delete font;
 }
 
 bool AssetManager::loadTexture(const std::string file)
@@ -34,4 +41,9 @@ sf::Texture* AssetManager::getTexture(const std::string name)
         return textures[name];
     }
     return NULL;
+}
+
+sf::Font* AssetManager::getFont()
+{
+    return font;
 }
