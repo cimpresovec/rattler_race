@@ -10,7 +10,8 @@ enum GameSceneType
 {
     none = 0,
     quit = 1,
-    main_menu = 2
+    main_menu = 2,
+    level = 3
 };
 
 //Abstract for game scene

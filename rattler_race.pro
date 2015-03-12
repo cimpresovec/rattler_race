@@ -7,10 +7,12 @@ LIBS += -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
 
 SOURCES += main.cpp \
     mainMenu.cpp \
-    assetManager.cpp
+    assetManager.cpp \
+    levelScene.cpp
 
 HEADERS += \
     gameScene.h \
     mainMenu.h \
-    assetManager.h
+    assetManager.h \
+    levelScene.h
 

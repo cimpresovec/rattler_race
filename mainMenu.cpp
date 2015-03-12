@@ -27,6 +27,10 @@ void MainMenu::handleInput()
         {
             next_scene = quit;
         }
+        if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::L)
+        {
+            next_scene = level;
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "mainMenu.h"
+#include "levelScene.h"
 #include "assetManager.h"
 
 int main()
@@ -33,6 +34,20 @@ int main()
         {
             switch (current_scene->next_scene)
             {
+            case level:
+            {
+                GameScene *new_scene = new LevelScene(window, event, asset_manager);
+                delete current_scene;
+                current_scene = new_scene;
+                break;
+            }
+            case main_menu:
+            {
+                GameScene *new_scene = new MainMenu(window, event, asset_manager);
+                delete current_scene;
+                current_scene = new_scene;
+                break;
+            }
             case quit:
             {
                 game_loop = false;
