@@ -1,7 +1,4 @@
 #include "mainMenu.h"
-#include <iostream>
-
-using namespace std;
 
 MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
