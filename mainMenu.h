@@ -1,6 +1,8 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
+#define BUTTONS_IN_ROW 6
+
 #include "gameScene.h"
 #include "assetManager.h"
 
@@ -17,10 +19,13 @@ private:
     int mouseX;
     int mouseY;
 
+	double buttonSize = 0;
+	double spaceBetween = 0;
+
 	sf::RectangleShape background;
 
-	sf::RectangleShape lvl1Btn;
-	sf::Text lvl1Text;
+	sf::RectangleShape lvlBtn;
+	sf::Text lvlText;
 
 };
 
