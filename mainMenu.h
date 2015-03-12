@@ -7,12 +7,12 @@
 class MainMenu : public GameScene
 {
 public:
-    MainMenu(AssetManager *manager);
+    MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *manager);
     virtual ~MainMenu();
 
-    void handleInput(sf::RenderWindow *window, sf::Event *event);
+    void handleInput();
     void handleLogic();
-    void handleRender(sf::RenderWindow *window);
+    void handleRender();
 };
 
 #endif // MAINMENU_H

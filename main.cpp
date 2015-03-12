@@ -14,19 +14,19 @@ int main()
 
     window->setFramerateLimit(60);
 
-    GameScene *current_scene = new MainMenu(asset_manager);
+    GameScene *current_scene = new MainMenu(window, event, asset_manager);
     bool game_loop = true;
 
     while (game_loop)
     {
         //Event handling
-        current_scene->handleInput(window, event);
+        current_scene->handleInput();
 
         //Logic
         current_scene->handleLogic();
 
         //Render
-        current_scene->handleRender(window);
+        current_scene->handleRender();
 
         //Scene switching
         if (current_scene->next_scene != none)

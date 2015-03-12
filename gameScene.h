@@ -19,13 +19,15 @@ class GameScene
 public:
     GameSceneType next_scene;
     AssetManager *asset_manager;
+    sf::RenderWindow *window;
+    sf::Event *event;
 
     virtual ~GameScene() {}
 
     //Required methods
-    virtual void handleInput(sf::RenderWindow *window, sf::Event *event) = 0;
+    virtual void handleInput() = 0;
     virtual void handleLogic() = 0;
-    virtual void handleRender(sf::RenderWindow *window) = 0;
+    virtual void handleRender() = 0;
 };
 
 #endif // GAMESCENE_H
