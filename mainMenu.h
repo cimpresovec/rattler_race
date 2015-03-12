@@ -13,6 +13,15 @@ public:
     void handleInput();
     void handleLogic();
     void handleRender();
+private:
+	int mouseX = 0;
+	int mouseY = 0;
+
+	sf::RectangleShape background;
+
+	sf::RectangleShape lvl1Btn;
+	sf::Text lvl1Text;
+
 };
 
 #endif // MAINMENU_H
