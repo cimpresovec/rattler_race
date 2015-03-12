@@ -1,5 +1,7 @@
 #ifndef LEVELSCENE_H
 #define LEVELSCENE_H
+#define WIDTH 33
+#define HEIGHT 33
 
 #include "gameScene.h"
 #include "assetManager.h"
@@ -13,6 +15,9 @@ public:
     void handleInput();
     void handleLogic();
     void handleRender();
+private:
+	int scene[HEIGHT][WIDTH];
+	sf::RectangleShape backgroundTile;
 };
 
 #endif // LEVELSCENE_H

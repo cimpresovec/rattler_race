@@ -58,6 +58,25 @@ void MainMenu::handleInput()
             next_scene = setting;
         }
     }
+
+	// Mouse input
+
+	mouseX = sf::Mouse::getPosition(*window).x;
+	mouseY = sf::Mouse::getPosition(*window).y;
+
+	// Lvl1 button mouse detection
+	if (((mouseX > lvl1Btn.getPosition().x) && (mouseX < lvl1Btn.getPosition().x + lvl1Btn.getSize().x)) &&
+		((mouseY > lvl1Btn.getPosition().y) && (mouseY < lvl1Btn.getPosition().y + lvl1Btn.getSize().y))) {
+
+		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 200));
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			next_scene = level;
+		}
+
+	}
+	else
+		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 255));
 }
 
 void MainMenu::handleLogic()
@@ -68,18 +87,6 @@ void MainMenu::handleLogic()
 void MainMenu::handleRender()
 {
     window->clear();
-
-	mouseX = sf::Mouse::getPosition(*window).x;
-	mouseY = sf::Mouse::getPosition(*window).y;
-
-	cout << mouseX << ", "<< mouseY << endl;
-
-	// Lvl1 button mouse detection
-	if (((mouseX > lvl1Btn.getPosition().x) && (mouseX < lvl1Btn.getPosition().x + lvl1Btn.getSize().x)) &&
-		((mouseY > lvl1Btn.getPosition().y) && (mouseY < lvl1Btn.getPosition().y + lvl1Btn.getSize().y)))
-		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 200));
-	else
-		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 255));
 
 	// Menu background
 	window->draw(background);
