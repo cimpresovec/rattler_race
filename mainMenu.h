@@ -14,8 +14,8 @@ public:
     void handleLogic();
     void handleRender();
 private:
-	int mouseX = 0;
-	int mouseY = 0;
+    int mouseX;
+    int mouseY;
 
 	sf::RectangleShape background;
 

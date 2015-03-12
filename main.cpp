@@ -7,13 +7,13 @@
 
 int main()
 {
-    sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(800, 700), "Rattler Race");
+    sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(560, 660), "Rattler Race");
     sf::Event *event = new sf::Event();
 
     //Asset manager
     //Image, fonts, sounds should only be loaded once, and then used where needed
     AssetManager *asset_manager = new AssetManager();
-    asset_manager->loadTexture("assets/image.png");
+    asset_manager->loadTexture("assets/tiles.png");
 
     window->setFramerateLimit(60);
 

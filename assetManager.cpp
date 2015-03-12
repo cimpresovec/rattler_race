@@ -30,6 +30,7 @@ bool AssetManager::loadTexture(const std::string file)
         std::cerr << "Can't load file: " << file << '\n';
         return false;
     }
+    tex->setSmooth(false);
     textures[file] = tex;
     return true;
 }
