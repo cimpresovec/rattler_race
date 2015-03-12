@@ -1,4 +1,5 @@
 #include "levelScene.h"
+#include <time.h>
 
 #define TOP_MARGIN 100
 
@@ -9,16 +10,22 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     this->event = event;
     next_scene = none;
 
+    srand(time(NULL));
+
 	// Set tile colors
     tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y-TOP_MARGIN) / (double)HEIGHT));
     tile.setTexture(asset_manager->getTexture("assets/tiles.png"));
 
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			if ((i+j) % 2 == 0)
+            if (i == 0 || j == 0 || i == 32 || j == 32)
 				scene[i][j] = 1;
 			else
-				scene[i][j] = 0;
+            {
+                scene[i][j] = rand() % 2;
+                if (scene[i][j] == 1)
+                    scene[i][j] = rand() % 2;
+            }
 		}
 	}
 }
