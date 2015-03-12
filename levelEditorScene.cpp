@@ -45,7 +45,7 @@ void LevelEditorScene::handleInput()
             case sf::Keyboard::V:
                 tool = kLevelEditorToolWallPlacer;
                 break;
-            case sf::Keyboard::C:
+            case sf::Keyboard::B:
                 tool = kLevelEditorToolSpecialPillPlacer;
                 break;
             default:
