@@ -31,6 +31,14 @@ void MainMenu::handleInput()
         {
             next_scene = level;
         }
+        if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::E)
+        {
+            next_scene = level_editor;
+        }
+        if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::S)
+        {
+            next_scene = setting;
+        }
     }
 }
 

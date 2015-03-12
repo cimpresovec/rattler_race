@@ -11,7 +11,9 @@ enum GameSceneType
     none = 0,
     quit = 1,
     main_menu = 2,
-    level = 3
+    level = 3,
+    level_editor = 4,
+    setting = 5
 };
 
 //Abstract for game scene

@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include "mainMenu.h"
 #include "levelScene.h"
+#include "levelEditorScene.h"
+#include "settingsScene.h"
 #include "assetManager.h"
 
 int main()
@@ -44,6 +46,20 @@ int main()
             case main_menu:
             {
                 GameScene *new_scene = new MainMenu(window, event, asset_manager);
+                delete current_scene;
+                current_scene = new_scene;
+                break;
+            }
+            case level_editor:
+            {
+                GameScene *new_scene = new LevelEditorScene(window, event, asset_manager);
+                delete current_scene;
+                current_scene = new_scene;
+                break;
+            }
+            case setting:
+            {
+                GameScene *new_scene = new SettingsScene(window, event, asset_manager);
                 delete current_scene;
                 current_scene = new_scene;
                 break;
