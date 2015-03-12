@@ -17,7 +17,7 @@ public:
     void handleRender();
 private:
 	int scene[HEIGHT][WIDTH];
-	sf::RectangleShape backgroundTile;
+	sf::RectangleShape tile;
 };
 
 #endif // LEVELSCENE_H

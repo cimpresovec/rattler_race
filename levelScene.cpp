@@ -8,7 +8,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     next_scene = none;
 
 	// Set tile colors
-	backgroundTile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, window->getSize().y / (double)HEIGHT));
+	tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, window->getSize().y / (double)HEIGHT));
 
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
@@ -55,14 +55,14 @@ void LevelScene::handleRender()
 		for (int j = 0; j < WIDTH; j++) {
 			switch (scene[i][j]) {
 			case 0:
-				backgroundTile.setFillColor(sf::Color(242, 241, 239, 255));
-				backgroundTile.setPosition(backgroundTile.getSize().x * i, backgroundTile.getSize().y * j);
-				window->draw(backgroundTile);
+				tile.setFillColor(sf::Color(242, 241, 239, 255));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j);
+				window->draw(tile);
 				break;
 			case 1:
-				backgroundTile.setFillColor(sf::Color(103, 65, 114, 255));
-				backgroundTile.setPosition(backgroundTile.getSize().x * i, backgroundTile.getSize().y * j);
-				window->draw(backgroundTile);
+				tile.setFillColor(sf::Color(103, 65, 114, 255));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j);
+				window->draw(tile);
 				break;
 			default:
 				break;
