@@ -1,4 +1,7 @@
 #include "mainMenu.h"
+#include <iostream>
+
+using namespace std;
 
 MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
@@ -6,6 +9,21 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
     this->window = window;
     this->event = event;
     next_scene = none;
+
+	// Menu background
+	background.setSize((sf::Vector2f)window->getSize());
+	background.setFillColor(sf::Color(242, 241, 239, 255));
+
+	// Lvl1 button and text
+	lvl1Btn.setSize(sf::Vector2f(50,50));
+	lvl1Btn.setPosition(10, 10);
+	lvl1Btn.setFillColor(sf::Color(103, 65, 114, 255));
+
+	lvl1Text.setString("1");
+	lvl1Text.setColor(sf::Color(242, 241, 239, 255));
+	lvl1Text.setFont(*asset_manager->getFont());
+	lvl1Text.setPosition(26,15);
+
 }
 
 MainMenu::~MainMenu()
@@ -51,15 +69,24 @@ void MainMenu::handleRender()
 {
     window->clear();
 
-    //CRAP TEXTURE TEST
-    sf::RectangleShape durka(sf::Vector2f(400, 200));
-    durka.setTexture(asset_manager->getTexture("assets/image.png"));
-    durka.setPosition(100, 100);
-    window->draw(durka);
+	mouseX = sf::Mouse::getPosition(*window).x;
+	mouseY = sf::Mouse::getPosition(*window).y;
 
-    //CRAP FONT TEST
-    sf::Text text("MENUJ DELA", *asset_manager->getFont());
-    window->draw(text);
+	cout << mouseX << ", "<< mouseY << endl;
+
+	// Lvl1 button mouse detection
+	if (((mouseX > lvl1Btn.getPosition().x) && (mouseX < lvl1Btn.getPosition().x + lvl1Btn.getSize().x)) &&
+		((mouseY > lvl1Btn.getPosition().y) && (mouseY < lvl1Btn.getPosition().y + lvl1Btn.getSize().y)))
+		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 200));
+	else
+		lvl1Btn.setFillColor(sf::Color(103, 65, 114, 255));
+
+	// Menu background
+	window->draw(background);
+	
+	// Lvl1 button
+	window->draw(lvl1Btn);
+	window->draw(lvl1Text);
 
     window->display();
 }
