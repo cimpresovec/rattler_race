@@ -1,5 +1,6 @@
 #ifndef LEVELSCENE_H
 #define LEVELSCENE_H
+
 #define WIDTH 33
 #define HEIGHT 33
 

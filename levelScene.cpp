@@ -61,7 +61,7 @@ void LevelScene::handleRender()
 {
     window->clear();
 
-	for (int i = 0; i < HEIGHT; i++) {
+    for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++) {
 			switch (scene[i][j]) {
 			case 0:

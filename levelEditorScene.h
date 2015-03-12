@@ -8,6 +8,11 @@
     #define kLEVEL_SIDE_DIMENSION 33
 #endif
 
+#ifndef TOP_MARGIN
+    #define TOP_MARGIN 100
+#endif
+
+
 enum LevelEditorTool
 {
     kLevelEditorToolEraser = 0,
