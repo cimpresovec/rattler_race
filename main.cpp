@@ -13,7 +13,7 @@ int main()
     //Asset manager
     //Image, fonts, sounds should only be loaded once, and then used where needed
     AssetManager *asset_manager = new AssetManager();
-    asset_manager->loadTexture("assets/tiles.png");
+    asset_manager->loadTexture("assets/tiles1-5.png");
 
     window->setFramerateLimit(60);
 
