@@ -4,6 +4,8 @@
 #define WIDTH 33
 #define HEIGHT 33
 
+#define TOP_MARGIN 100
+
 #include <map>
 #include <string>
 #include <SFML/Graphics.hpp>

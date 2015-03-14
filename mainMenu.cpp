@@ -94,10 +94,10 @@ void MainMenu::handleInput()
 							}
 							else {
 								int tmp = rand() % 100;
-								if (tmp > 95) {
+								if (tmp > 98) {
 									asset_manager->scene[i][j] = 2;
 								}
-								else if (tmp > 90) {
+								else if (tmp > 97) {
 									asset_manager->scene[i][j] = 3;
 								}
 								else {
@@ -124,10 +124,10 @@ void MainMenu::handleInput()
 							}
 							else {
 								int tmp = rand() % 100;
-								if (tmp > 95) {
+								if (tmp > 98) {
 									asset_manager->scene[i][j] = 2;
 								}
-								else if (tmp > 90) {
+								else if (tmp > 97) {
 									asset_manager->scene[i][j] = 3;
 								}
 								else {
