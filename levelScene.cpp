@@ -17,7 +17,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 		for (int j = 0; j < WIDTH; j++)
 			this->scene[i][j] = asset_manager->scene[i][j];
 
-	snake = new Snake(window);
+	snake = new Snake(window, scene);
 }
 
 LevelScene::~LevelScene()
@@ -58,6 +58,11 @@ void LevelScene::handleInput()
 		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::D)
 		{
 			snake->setDirection("right");
+		}
+
+		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Q)
+		{
+			snake->addPart();
 		}
     }
 }
@@ -101,8 +106,8 @@ void LevelScene::handleRender()
 	}
 
 	// Snake
-	snake->drawSnake();
 	speed++;
+	snake->drawSnake();
 	if (speed == 5) {
 		snake->moveSnake();
 		speed = 0;

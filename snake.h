@@ -6,21 +6,34 @@
 #include "assetManager.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 class Snake
 {
 public:
-	Snake(sf::RenderWindow *window);
+	Snake(sf::RenderWindow *window, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
 	void moveSnake();
 	void drawSnake();
 	void setDirection(std::string direction);
+	void detectColision();
+	void addPart();
+
 private:
-	std::vector<sf::RectangleShape> snake;
 	sf::RenderWindow *window;
 	sf::Vector2f tileSize;
 	std::string direction;
+	int scene[HEIGHT][WIDTH];
+
+	struct SnakeTile {
+		SnakeTile() {}
+		sf::RectangleShape rect;
+		sf::Vector2f position;
+		sf::Vector2f lastPosition;
+	};
+
+	std::vector<SnakeTile> snake;
 };
 
 #endif // SNAKE_H
