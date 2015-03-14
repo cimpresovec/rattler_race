@@ -38,7 +38,23 @@ int main()
             {
             case level:
             {
-                GameScene *new_scene = new LevelScene(window, event, asset_manager);
+				int scene[HEIGHT][WIDTH];
+				for (int i = 0; i < HEIGHT; i++) {
+					for (int j = 0; j < WIDTH; j++) {
+						if (i == 0 || j == 0 || i == (33 - 1) || j == (33 - 1))
+							scene[i][j] = 1;
+						else if ( i == 10 && j > 5 && j < 27) {
+							scene[i][j] = 1;
+						}
+						else if (i == 22 && j > 5 && j < 27) {
+							scene[i][j] = 1;
+						}
+						else {
+							scene[i][j] = 0;
+						}
+					}
+				}
+                GameScene *new_scene = new LevelScene(window, event, asset_manager, scene);
                 delete current_scene;
                 current_scene = new_scene;
                 break;

@@ -3,7 +3,7 @@
 
 #define TOP_MARGIN 100
 
-LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
+LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager, int scene[HEIGHT][WIDTH])
 {
     asset_manager = manager;
     this->window = window;
@@ -18,14 +18,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-            if (i == 0 || j == 0 || i == (HEIGHT-1) || j == (WIDTH-1))
-				scene[i][j] = 1;
-			else
-            {
-                scene[i][j] = rand() % 2;
-                if (scene[i][j] == 1)
-                    scene[i][j] = rand() % 2;
-            }
+			this->scene[i][j] = scene[i][j];
 		}
 	}
 }

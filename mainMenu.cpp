@@ -16,8 +16,10 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	background.setFillColor(sf::Color(242, 241, 239, 255));
 
 	// Lvl button and text
-	lvlBtn.setSize(sf::Vector2f(buttonSize, buttonSize));
-	lvlBtn.setFillColor(sf::Color(103, 65, 114, 255));
+	for (int i = 0; i < 30; i++){
+		lvlBtn[i].setSize(sf::Vector2f(buttonSize, buttonSize));
+		lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 255));
+	}
 
 	lvlText.setColor(sf::Color(242, 241, 239, 255));
 	lvlText.setFont(*asset_manager->getFont());
@@ -61,19 +63,46 @@ void MainMenu::handleInput()
 	mouseX = sf::Mouse::getPosition(*window).x;
 	mouseY = sf::Mouse::getPosition(*window).y;
 
-	// Lvl1 button mouse detection
-	if (((mouseX > lvlBtn.getPosition().x) && (mouseX < lvlBtn.getPosition().x + lvlBtn.getSize().x)) &&
-		((mouseY > lvlBtn.getPosition().y) && (mouseY < lvlBtn.getPosition().y + lvlBtn.getSize().y))) {
+	// Lvl button mouse detection
+	// Load levels here
+	
+	int j = -1;
+	for (int i = 0; i < 30; i++) {
+		if ((i % BUTTONS_IN_ROW) == 0)
+			j++;
 
-		lvlBtn.setFillColor(sf::Color(103, 65, 114, 200));
+		if (((mouseX > lvlBtn[i].getPosition().x) && (mouseX < lvlBtn[i].getPosition().x + buttonSize)) &&
+			((mouseY > lvlBtn[i].getPosition().y) && (mouseY < lvlBtn[i].getPosition().y + buttonSize))) {
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			next_scene = level;
+			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 200));
+
+			switch (i) {
+			case 0:
+				// Level 1
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					next_scene = level;
+				}
+				break;
+			case 1:
+				// Level 2
+				break;
+			case 2:
+				// Level 3
+				break;
+			case 3:
+				// Level 4
+				break;
+			case 4:
+				// Level 5
+				break;
+			default:
+				break;
+			}
+
 		}
-
+		else
+			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 255));
 	}
-	else
-		lvlBtn.setFillColor(sf::Color(103, 65, 114, 255));
 }
 
 void MainMenu::handleLogic()
@@ -93,13 +122,13 @@ void MainMenu::handleRender()
 	for (int i = 0; i < 30; i++) {
 		if ((i % BUTTONS_IN_ROW) == 0)
 			j++;
-		lvlBtn.setPosition(spaceBetween * ((i%BUTTONS_IN_ROW) + 1) + buttonSize * (i%BUTTONS_IN_ROW), spaceBetween * (j + 1) + buttonSize * j);
+		lvlBtn[i].setPosition(spaceBetween * ((i%BUTTONS_IN_ROW) + 1) + buttonSize * (i%BUTTONS_IN_ROW), spaceBetween * (j + 1) + buttonSize * j);
 		if (i < 9)
 			lvlText.setString("0"+std::to_string(i+1));
 		else
 			lvlText.setString(std::to_string(i + 1));
 		lvlText.setPosition(((spaceBetween + buttonSize / 2.0) + (buttonSize + spaceBetween) * (i%BUTTONS_IN_ROW)) - (buttonSize / 4.0), (spaceBetween + buttonSize / 2.0) + (buttonSize + spaceBetween) * (j%BUTTONS_IN_ROW) - (buttonSize / 4.0));
-		window->draw(lvlBtn);
+		window->draw(lvlBtn[i]);
 		window->draw(lvlText);
 	}
 

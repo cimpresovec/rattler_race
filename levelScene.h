@@ -10,7 +10,7 @@
 class LevelScene : public GameScene
 {
 public:
-    LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager);
+    LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager, int scene[HEIGHT][WIDTH]);
     virtual ~LevelScene();
 
     void handleInput();

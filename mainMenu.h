@@ -2,6 +2,7 @@
 #define MAINMENU_H
 
 #define BUTTONS_IN_ROW 6
+#define NUMBER_OF_LVLS 30
 
 #include "gameScene.h"
 #include "assetManager.h"
@@ -24,7 +25,7 @@ private:
 
 	sf::RectangleShape background;
 
-	sf::RectangleShape lvlBtn;
+	sf::RectangleShape lvlBtn[NUMBER_OF_LVLS];
 	sf::Text lvlText;
 
 };
