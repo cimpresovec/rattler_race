@@ -93,20 +93,15 @@ void MainMenu::handleInput()
 								asset_manager->scene[i][j] = 0;
 							}
 							else {
-								switch (rand() % 3)
-								{
-								case 0:
-									asset_manager->scene[i][j] = 1;
-									break;
-								case 1:
+								int tmp = rand() % 100;
+								if (tmp > 95) {
 									asset_manager->scene[i][j] = 2;
-									break;
-								case 2:
+								}
+								else if (tmp > 90) {
 									asset_manager->scene[i][j] = 3;
-									break;
-								default:
+								}
+								else {
 									asset_manager->scene[i][j] = 1;
-									break;
 								}
 							}
 						}
@@ -128,20 +123,15 @@ void MainMenu::handleInput()
 								asset_manager->scene[i][j] = 0;
 							}
 							else {
-								switch (rand()%3)
-								{
-								case 0:
-									asset_manager->scene[i][j] = 1;
-									break;
-								case 1:
+								int tmp = rand() % 100;
+								if (tmp > 95) {
 									asset_manager->scene[i][j] = 2;
-									break;
-								case 2:
+								}
+								else if (tmp > 90) {
 									asset_manager->scene[i][j] = 3;
-									break;
-								default:
+								}
+								else {
 									asset_manager->scene[i][j] = 1;
-									break;
 								}
 							}
 						}
