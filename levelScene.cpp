@@ -38,6 +38,26 @@ void LevelScene::handleInput()
         {
             next_scene = main_menu;
         }
+
+		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::W)
+		{
+
+		}
+
+		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::A)
+		{
+
+		}
+
+		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::S)
+		{
+
+		}
+
+		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::D)
+		{
+
+		}
     }
 }
 
