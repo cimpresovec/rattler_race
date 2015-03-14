@@ -1,6 +1,9 @@
 #ifndef ASSETMANAGER_H
 #define ASSETMANAGER_H
 
+#define WIDTH 33
+#define HEIGHT 33
+
 #include <map>
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -15,6 +18,7 @@ public:
     ~AssetManager();
 
     bool loadTexture(const std::string file);
+	int scene[HEIGHT][WIDTH];
     sf::Texture* getTexture(const std::string name);
     sf::Font* getFont();
 };

@@ -3,24 +3,20 @@
 
 #define TOP_MARGIN 100
 
-LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager, int scene[HEIGHT][WIDTH])
+LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
     asset_manager = manager;
     this->window = window;
     this->event = event;
     next_scene = none;
 
-    srand(time(NULL));
-
 	// Set tile colors
     tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y-TOP_MARGIN) / (double)HEIGHT));
     tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
 
-	for (int i = 0; i < HEIGHT; i++) {
-		for (int j = 0; j < WIDTH; j++) {
-			this->scene[i][j] = scene[i][j];
-		}
-	}
+	for (int i = 0; i < HEIGHT; i++)
+		for (int j = 0; j < WIDTH; j++)
+			this->scene[i][j] = asset_manager->scene[i][j];
 }
 
 LevelScene::~LevelScene()
@@ -58,13 +54,23 @@ void LevelScene::handleRender()
 		for (int j = 0; j < WIDTH; j++) {
 			switch (scene[i][j]) {
 			case 0:
-				tile.setTextureRect(sf::Rect<int>(64, 0, 64, 64));
-                tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+				tile.setTextureRect(sf::Rect<int>(0, 0, 64, 64));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
 				window->draw(tile);
 				break;
             case 1:
-				tile.setTextureRect(sf::Rect<int>(0, 0, 64, 64));
-                tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+				tile.setTextureRect(sf::Rect<int>(64, 0, 64, 64));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+				window->draw(tile);
+				break;
+			case 2:
+				tile.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+				window->draw(tile);
+				break;
+			case 3:
+				tile.setTextureRect(sf::Rect<int>(192, 0, 64, 64));
+				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
 				window->draw(tile);
 				break;
 			default:

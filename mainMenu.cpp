@@ -7,6 +7,8 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
     this->event = event;
     next_scene = none;
 
+	srand(time(NULL));
+
 	// Dvet gumbov pa 1/10 gumba razmaka
 	buttonSize = (double)(window->getSize().x / (BUTTONS_IN_ROW + 2));
 	spaceBetween = (double)(buttonSize*2 / (BUTTONS_IN_ROW+1));
@@ -80,11 +82,72 @@ void MainMenu::handleInput()
 			case 0:
 				// Level 1
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					for (int i = 0; i < HEIGHT; i++) {
+						for (int j = 0; j < WIDTH; j++) {
+							if (i == 0 || j == 0 || i == (33 - 1) || j == (33 - 1))
+								asset_manager->scene[i][j] = 0;
+							else if (i == 10 && j > 5 && j < 27) {
+								asset_manager->scene[i][j] = 0;
+							}
+							else if (i == 22 && j > 5 && j < 27) {
+								asset_manager->scene[i][j] = 0;
+							}
+							else {
+								switch (rand() % 3)
+								{
+								case 0:
+									asset_manager->scene[i][j] = 1;
+									break;
+								case 1:
+									asset_manager->scene[i][j] = 2;
+									break;
+								case 2:
+									asset_manager->scene[i][j] = 3;
+									break;
+								default:
+									asset_manager->scene[i][j] = 1;
+									break;
+								}
+							}
+						}
+					}
 					next_scene = level;
 				}
 				break;
 			case 1:
 				// Level 2
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+					for (int i = 0; i < HEIGHT; i++) {
+						for (int j = 0; j < WIDTH; j++) {
+							if (i == 0 || j == 0 || i == (33 - 1) || j == (33 - 1))
+								asset_manager->scene[i][j] = 0;
+							else if (j == 10 && i > 5 && i < 27) {
+								asset_manager->scene[i][j] = 0;
+							}
+							else if (j == 22 && i > 5 && i < 27) {
+								asset_manager->scene[i][j] = 0;
+							}
+							else {
+								switch (rand()%3)
+								{
+								case 0:
+									asset_manager->scene[i][j] = 1;
+									break;
+								case 1:
+									asset_manager->scene[i][j] = 2;
+									break;
+								case 2:
+									asset_manager->scene[i][j] = 3;
+									break;
+								default:
+									asset_manager->scene[i][j] = 1;
+									break;
+								}
+							}
+						}
+					}
+					next_scene = level;
+				}
 				break;
 			case 2:
 				// Level 3

@@ -9,6 +9,10 @@ AssetManager::AssetManager()
     {
         std::cerr << "Can't load font: Ubuntu-L.ttf\n";
     }
+
+	for (int i = 0; i < HEIGHT; i++)
+		for (int j = 0; j < WIDTH; j++)
+			scene[i][j] = 0;
 }
 
 AssetManager::~AssetManager()
