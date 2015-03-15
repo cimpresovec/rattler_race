@@ -4,6 +4,11 @@
 #include "gameScene.h"
 #include "assetManager.h"
 
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <cmath>
+
 #ifndef kLEVEL_SIDE_DIMENSION
     #define kLEVEL_SIDE_DIMENSION 33
 #endif
@@ -15,26 +20,18 @@
 
 enum LevelEditorTool
 {
-    kLevelEditorToolEraser = 0,
-    kLevelEditorToolWallPlacer = 1,
+    kLevelEditorToolEraser = 1,
+    kLevelEditorToolWallPlacer = 0,
     kLevelEditorToolSpecialPillPlacer = 2
 };
 
 typedef enum LevelEditorTool LevelEditorTool;
 
-struct LevelTile
-{
-    sf::RectangleShape renderRect;
-    char type;
-
-};
-
-typedef struct LevelTile LevelTile;
-
 class LevelEditorScene : public GameScene
 {
 private:
-    LevelTile levelMap[kLEVEL_SIDE_DIMENSION][kLEVEL_SIDE_DIMENSION];
+    sf::Vector2f tile_size;
+    unsigned char level_tiles[kLEVEL_SIDE_DIMENSION][kLEVEL_SIDE_DIMENSION];
     LevelEditorTool tool;
 
 public:
@@ -44,6 +41,11 @@ public:
     void handleInput();
     void handleLogic();
     void handleRender();
+
+
+    void saveLevel(std::string level_name);
+    void loadLevel(std::string level_name);
 };
 
 #endif // LEVELEDITORSCENE_H
+
