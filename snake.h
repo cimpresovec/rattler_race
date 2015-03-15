@@ -17,6 +17,7 @@ public:
 	void moveSnake();
 	void drawSnake();
 	void setDirection(std::string direction);
+	std::string getDirection();
 	void detectColision();
 	void addPart();
     void newStart();

@@ -1,6 +1,8 @@
 #ifndef LEVELSCENE_H
 #define LEVELSCENE_H
 
+#define SPEED 8
+
 #include "gameScene.h"
 #include "assetManager.h"
 #include "snake.h"

@@ -116,3 +116,7 @@ void Snake::newStart()
     this->addPart();
     this->addPart();
 }
+
+std::string Snake::getDirection() {
+	return direction;
+}

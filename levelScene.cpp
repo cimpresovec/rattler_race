@@ -42,22 +42,38 @@ void LevelScene::handleInput()
 
         if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::W || event->key.code == sf::Keyboard::Up))
 		{
-			snake->setDirection("up");
+			if (snake->getDirection() != "up") {
+				snake->setDirection("up");
+				speed = 0;
+				snake->moveSnake();
+			}
 		}
 
         if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::A || event->key.code == sf::Keyboard::Left))
 		{
-			snake->setDirection("left");
+			if (snake->getDirection() != "left") {
+				snake->setDirection("left");
+				speed = 0;
+				snake->moveSnake();
+			}
 		}
 
         if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::S || event->key.code == sf::Keyboard::Down))
 		{
-			snake->setDirection("down");
+			if (snake->getDirection() != "down") {
+				snake->setDirection("down");
+				speed = 0;
+				snake->moveSnake();
+			}
 		}
 
         if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::D || event->key.code == sf::Keyboard::Right))
 		{
-			snake->setDirection("right");
+			if (snake->getDirection() != "right") {
+				snake->setDirection("right");
+				speed = 0;
+				snake->moveSnake();
+			}
 		}
 
 		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Q)
@@ -108,7 +124,7 @@ void LevelScene::handleRender()
 	// Snake
 	speed++;
 	snake->drawSnake();
-    if (speed == 5)
+    if (speed == SPEED)
     {
 		snake->moveSnake();
 		speed = 0;
