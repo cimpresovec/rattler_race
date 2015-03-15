@@ -14,6 +14,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     next_scene = none;
 	speed = 0;
 
+	this->is_game_over = false;
+
 	// Set tile colors
     tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y-TOP_MARGIN) / (double)HEIGHT));
     tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
@@ -49,17 +51,7 @@ void LevelScene::timerHandler()
 	timer.setSize(sf::Vector2f(timer_size * (double)time_to_solve / (double)kLevelPlayTime, tile.getSize().y));
 
 	if (time_to_solve <= 0)
-		timerReset();
-}
-
-void LevelScene::timerReset()
-{
-	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
-	start = clock();
-	delete snake;
-	snake = new Snake(window, asset_manager, scene, PICKUPS);
-	clearLevel();
-	placePickups(PICKUPS);
+		is_game_over = true;
 }
 
 void LevelScene::handleInput()
@@ -72,9 +64,19 @@ void LevelScene::handleInput()
             next_scene = quit;
         }
 
-        if (event->type == sf::Event::KeyReleased && event->key.code == sf::Keyboard::Escape)
+
+
+        if (event->type == sf::Event::KeyReleased)
         {
-            next_scene = main_menu;
+        	if (event->key.code == sf::Keyboard::Escape)
+        	{
+            	next_scene = main_menu;
+            }
+            else if (event->key.code == sf::Keyboard::R && is_game_over)
+            {
+            	is_game_over = false;
+            	resetLevel();
+            }
         }
 
         if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::W || event->key.code == sf::Keyboard::Up))
@@ -180,6 +182,31 @@ void LevelScene::handleRender()
 		}
 	}
 
+	if (is_game_over)
+	{
+		static bool gameOverSetup = false;	
+		static sf::RectangleShape underlay;
+		static sf::Text gameOverText;
+
+		if (!gameOverSetup)
+		{
+			gameOverText.setFont(*asset_manager->getFont());
+        	gameOverText.setString("GAME OVER\n  R to restart");
+        	gameOverText.setPosition(190, 240);
+
+        	underlay.setPosition(135, 200);
+        	underlay.setSize(sf::Vector2f(300, 150));
+        	underlay.setFillColor(sf::Color(0, 0, 0, 255));
+			gameOverSetup = true;
+		}
+
+		window->draw(underlay);
+		window->draw(gameOverText);
+		window->display();
+
+		return;
+	}
+
 	// Snake
 	speed++;
 	snake->drawSnake();
@@ -190,10 +217,7 @@ void LevelScene::handleRender()
 
         if (ret == 0) //collision
         {
-            delete snake;
-            snake = new Snake(window, asset_manager, scene, PICKUPS);
-            clearLevel();
-            placePickups(PICKUPS);
+            is_game_over = true;
         }
         if (ret == 2) //level completed
         {
@@ -210,6 +234,16 @@ void LevelScene::handleRender()
     }
 
     window->display();
+}
+
+void LevelScene::resetLevel()
+{
+	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
+	start = clock();
+	delete snake;
+	snake = new Snake(window, asset_manager, scene, PICKUPS);
+	clearLevel();
+	placePickups(PICKUPS);
 }
 
 void LevelScene::loadLevel(std::string level_name)

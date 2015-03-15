@@ -21,12 +21,12 @@ public:
     void handleLogic();
     void handleRender();
 
+    void resetLevel();
     void loadLevel(std::string level_name);
     void clearLevel();
     void placePickups(int count = 10);
 
 	void timerHandler();
-	void timerReset();
 
 private:
     int scene[HEIGHT][WIDTH];
@@ -37,6 +37,9 @@ private:
 	double timer_size;
 	time_t start;
 
+
+    bool is_game_over;
+    void showGameOverMenu();
 };
 
 #endif // LEVELSCENE_H
