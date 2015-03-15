@@ -6,24 +6,52 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
 	this->window = window;
 	this->manager = manager;
 	this->tileSize = sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y - TOP_MARGIN) / (double)HEIGHT);
-    direction = "up";
-	
-	for (int i = 0; i < HEIGHT; i++)
-		for (int j = 0; j < WIDTH; j++)
-            this->scene[i][j] = scene[i][j];
+    this->direction = "up";
 
-    this->newStart();
+    this->scene = scene;
+    this->pickableItemsNum = 0;
+
+    for (int i = 1; i < HEIGHT - 1; i++)
+        for (int j = 1; j < WIDTH - 1; j++)
+            if (scene[i][j] >= 2)
+                pickableItemsNum++;
+
+    this->start();
 }
 
 Snake::~Snake() { }
 
-void Snake::moveSnake()
+int Snake::moveSnake()
 {
-	detectColision();
+    int ret = detectCollision();
 
-    for (int i = 0; i < snake.size(); i++)
+    for (unsigned int i = 0; i < snake.size(); i++)
     {
-		snake[i].lastPosition = snake[i].position;
+        if (i == 0)
+        {
+            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
+            snake[i].rect.setTextureRect(sf::Rect<int>(0, 0, 64, 64));
+            /*
+            if (direction == "down")
+                snake[i].rect.setRotation(180);
+            else if (direction == "left")
+                snake[i].rect.setRotation(-90);
+            else if (direction == "right")
+                snake[i].rect.setRotation(90);
+            */
+        }
+        else if (i == snake.size() - 1)
+        {
+            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
+            snake[i].rect.setTextureRect(sf::Rect<int>(192, 0, 64, 64));
+        }
+        else
+        {
+            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
+            snake[i].rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+        }
+
+        snake[i].lastPosition = snake[i].position;
 	}
 
 	if (direction == "up")
@@ -35,47 +63,51 @@ void Snake::moveSnake()
 	else if (direction == "right")
 		snake[0].position.x++;
 
-    for (int i = 1; i < snake.size(); i++)
-    {
+    for (unsigned int i = 1; i < snake.size(); i++)
 		snake[i].position = snake[i - 1].lastPosition;
-	}
+
+    return ret;
 }
 
 void Snake::drawSnake()
 {
-    for (int i = 0; i < snake.size(); i++)
+    for (unsigned int i = 0; i < snake.size(); i++)
     {
 		snake[i].rect.setPosition(snake[i].position.x * tileSize.x, snake[i].position.y * tileSize.y + TOP_MARGIN);
 		window->draw(snake[i].rect);
 	}
 }
 
-void Snake::detectColision()
+int Snake::detectCollision()
 {
-    currentScenePos = scene[(int)snake[0].position.x][(int)snake[0].position.y];
+    currentTilePosition = scene[getSnakeTileX(0)][getSnakeTileY(0)];
 
-    if (currentScenePos == 0) //collision with wall
-    {
-        this->newStart();
-    }
-    else if (snakeSelfCollision(snake[0].position.x, snake[0].position.y))
-    {
-        this->newStart();
-    }
-    else if (currentScenePos == 2 || currentScenePos == 3) //eat item
+    if (currentTilePosition == 0) //collision with wall
+        return 0;
+    else if (snakeSelfCollision(getSnakeTileX(0), getSnakeTileY(0))) //self collision
+        return 0;
+    else if (currentTilePosition >= 2) //eat item
     {
         this->addPart();
-        //scene[(int)snake[0].position.x][(int)snake[0].position.y] = 1;
+        scene[getSnakeTileX(0)][getSnakeTileY(0)] = 1;
+        pickableItemsNum--;
+
+        if (pickableItemsNum == 0)
+            scene[WIDTH / 2 - 1][HEIGHT] = 1;
+
+        return 1;
     }
+    else if (pickableItemsNum == 0 && getSnakeTileX(0) == 16 && getSnakeTileY(0) == 0)
+        return 2;
+
+    return -1;
 }
 
 bool Snake::snakeSelfCollision(int x, int y)
 {
-    for (int i = 1; i < snake.size(); i++)
-    {
-        if ((int)snake[i].position.x == x && (int)snake[i].position.y == y)
+    for (unsigned int i = 1; i < snake.size(); i++)
+        if (getSnakeTileX(i) == x && getSnakeTileY(i) == y)
             return true;
-    }
 
     return false;
 }
@@ -89,7 +121,7 @@ void Snake::addPart()
 	body.lastPosition.x = snake[snake.size() - 1].lastPosition.x;
 	body.lastPosition.y = snake[snake.size() - 1].lastPosition.y;
 	body.rect.setTexture(manager->getTexture("assets/snake.png"));
-	body.rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+    body.rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
 	snake.push_back(body);
 }
 
@@ -103,10 +135,8 @@ void Snake::setDirection(std::string direction)
 	}
 }
 
-void Snake::newStart()
+void Snake::start()
 {
-    snake.clear();
-
     SnakeTile head;
     head.rect.setSize(tileSize);
     head.position.x = (int)WIDTH / (int)2;
@@ -122,6 +152,17 @@ void Snake::newStart()
 	this->addPart();
 }
 
-std::string Snake::getDirection() {
+std::string Snake::getDirection()
+{
 	return direction;
+}
+
+int Snake::getSnakeTileX(int index)
+{
+    return (int)snake[index].position.x;
+}
+
+int Snake::getSnakeTileY(int index)
+{
+    return (int)snake[index].position.y;
 }

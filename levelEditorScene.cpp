@@ -1,4 +1,9 @@
 #include "levelEditorScene.h"
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 
 LevelEditorScene::LevelEditorScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {

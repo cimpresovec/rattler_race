@@ -26,6 +26,7 @@ private:
 	sf::RectangleShape tile;
 	Snake *snake;
 	int speed;
+    bool levelDone;
 };
 
 #endif // LEVELSCENE_H

@@ -1,5 +1,8 @@
 #include "levelScene.h"
 #include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
@@ -7,6 +10,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     this->window = window;
     this->event = event;
     next_scene = none;
+    levelDone = false;
 	speed = 0;
 
 	// Set tile colors
@@ -128,9 +132,18 @@ void LevelScene::handleRender()
 	// Snake
 	speed++;
 	snake->drawSnake();
-    if (speed == SPEED)
+    if (speed == SPEED && !levelDone)
     {
-		snake->moveSnake();
+        int ret = snake->moveSnake();
+
+        if (ret == 0) //collision
+        {
+            delete snake;
+            snake = new Snake(window, asset_manager, scene);
+        }
+        if (ret == 2) //level completed
+            levelDone = true;
+
 		speed = 0;
 	}
 	// END snake

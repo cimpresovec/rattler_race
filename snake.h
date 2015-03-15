@@ -11,25 +11,28 @@
 class Snake
 {
 public:
-	Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
+    Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
-	void moveSnake();
+    int moveSnake();
 	void drawSnake();
 	void setDirection(std::string direction);
 	std::string getDirection();
-	void detectColision();
+    int detectCollision();
 	void addPart();
-    void newStart();
+    void start();
     bool snakeSelfCollision(int x, int y);
+    int getSnakeTileX(int index);
+    int getSnakeTileY(int index);
 
 private:
 	sf::RenderWindow *window;
 	AssetManager *manager;
 	sf::Vector2f tileSize;
 	std::string direction;
-    int scene[HEIGHT][WIDTH];
-    int currentScenePos;
+    int (*scene)[HEIGHT];
+    int currentTilePosition;
+    int pickableItemsNum;
 
     struct SnakeTile
     {
