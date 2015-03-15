@@ -10,7 +10,6 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     this->window = window;
     this->event = event;
     next_scene = none;
-    levelDone = false;
 	speed = 0;
 
 	// Set tile colors
@@ -133,7 +132,7 @@ void LevelScene::handleRender()
 	speed++;
 	snake->drawSnake();
 
-    if (speed == SPEED && !levelDone)
+    if (speed == SPEED)
     {
         int ret = snake->moveSnake();
 
@@ -146,8 +145,13 @@ void LevelScene::handleRender()
         }
         if (ret == 2) //level completed
         {
-            levelDone = true;
-            // GO TO NEXT LEVEL OR SMTHN
+            // GO TO NEXT LEVEL
+            delete snake;
+            snake = new Snake(window, asset_manager, scene, PICKUPS);
+
+            const int level_index = asset_manager->selected_level + 1;
+            std::string level = "level_" + std::to_string(level_index + 1) + ".lvl";
+            this->loadLevel(level);
         }
 
 		speed = 0;
@@ -184,7 +188,7 @@ void LevelScene::loadLevel(std::string level_name)
 
 	file.close();
 
-	placePickups();
+    placePickups(PICKUPS);
 }
 
 void LevelScene::clearLevel()

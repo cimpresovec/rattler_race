@@ -92,7 +92,7 @@ int Snake::detectCollision()
 
         return 1;
     }
-    else if (pickups == 0 && getSnakeTileX(0) == 16 && getSnakeTileY(0) == 0)
+    else if (pickups == 0 && getSnakeTileX(0) == (int)WIDTH / 2 && getSnakeTileY(0) == 0) //level completed
         return 2;
 
     return -1;
