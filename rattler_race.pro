@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     assetManager.cpp \
     levelScene.cpp \
     levelEditorScene.cpp \
-    settingsScene.cpp
+    settingsScene.cpp \
+    snake.cpp
 
 HEADERS += \
     gameScene.h \
@@ -20,5 +21,6 @@ HEADERS += \
     assetManager.h \
     levelScene.h \
     levelEditorScene.h \
-    settingsScene.h
+    settingsScene.h \
+    snake.h
 

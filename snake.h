@@ -11,7 +11,7 @@
 class Snake
 {
 public:
-	Snake(sf::RenderWindow *window, int scene[HEIGHT][WIDTH]);
+    Snake(sf::RenderWindow *window, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
 	void moveSnake();
@@ -19,21 +19,25 @@ public:
 	void setDirection(std::string direction);
 	void detectColision();
 	void addPart();
+    void newStart();
+    bool snakeSelfCollision(int x, int y);
 
 private:
 	sf::RenderWindow *window;
 	sf::Vector2f tileSize;
 	std::string direction;
-	int scene[HEIGHT][WIDTH];
+    int scene[HEIGHT][WIDTH];
+    int currentScenePos;
 
-	struct SnakeTile {
+    struct SnakeTile
+    {
 		SnakeTile() {}
 		sf::RectangleShape rect;
 		sf::Vector2f position;
 		sf::Vector2f lastPosition;
 	};
 
-	std::vector<SnakeTile> snake;
+    std::vector<SnakeTile> snake;
 };
 
 #endif // SNAKE_H

@@ -15,7 +15,7 @@ public:
     void handleLogic();
     void handleRender();
 private:
-	int scene[HEIGHT][WIDTH];
+    int scene[HEIGHT][WIDTH];
 	sf::RectangleShape tile;
 	Snake *snake;
 	int speed = 0;

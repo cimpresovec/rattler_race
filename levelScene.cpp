@@ -17,7 +17,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 		for (int j = 0; j < WIDTH; j++)
 			this->scene[i][j] = asset_manager->scene[i][j];
 
-	snake = new Snake(window, scene);
+    snake = new Snake(window, scene);
 }
 
 LevelScene::~LevelScene()
@@ -40,22 +40,22 @@ void LevelScene::handleInput()
             next_scene = main_menu;
         }
 
-		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::W)
+        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::W || event->key.code == sf::Keyboard::Up))
 		{
 			snake->setDirection("up");
 		}
 
-		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::A)
+        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::A || event->key.code == sf::Keyboard::Left))
 		{
 			snake->setDirection("left");
 		}
 
-		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::S)
+        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::S || event->key.code == sf::Keyboard::Down))
 		{
 			snake->setDirection("down");
 		}
 
-		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::D)
+        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::D || event->key.code == sf::Keyboard::Right))
 		{
 			snake->setDirection("right");
 		}
@@ -108,7 +108,8 @@ void LevelScene::handleRender()
 	// Snake
 	speed++;
 	snake->drawSnake();
-	if (speed == 5) {
+    if (speed == 5)
+    {
 		snake->moveSnake();
 		speed = 0;
 	}
