@@ -20,6 +20,8 @@ public:
     void handleRender();
 
     void loadLevel(std::string level_name);
+    void clearLevel();
+    void placePickups(int count = 10);
 
 private:
     int scene[HEIGHT][WIDTH];

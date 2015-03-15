@@ -153,6 +153,8 @@ void LevelScene::handleRender()
 
 void LevelScene::loadLevel(std::string level_name)
 {
+	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
+	
 	std::ifstream file;
 	file.open("levels/" + level_name, std::ifstream::in);
 
@@ -176,4 +178,31 @@ void LevelScene::loadLevel(std::string level_name)
 	}
 
 	file.close();
+
+	placePickups();
+}
+
+void LevelScene::clearLevel()
+{
+	for (int i = 0; i < WIDTH; ++i)
+		for (int j = 0; j < HEIGHT; ++j)
+			if (this->scene[i][j] == 2)
+				this->scene[i][j] = 1;
+}
+
+void LevelScene::placePickups(int count)
+{
+	int loopCounter = 0;
+	while (count > 0 && loopCounter < 1000000)
+	{
+		const int x = rand() % WIDTH;
+		const int y = rand() % WIDTH;
+		if (this->scene[y][x] == 1)
+		{
+			this->scene[y][x] = 2;
+			count--;
+		}
+
+		++loopCounter;
+	}
 }
