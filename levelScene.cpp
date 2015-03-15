@@ -25,11 +25,41 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	this->loadLevel(level);
 
     snake = new Snake(window, asset_manager, scene, PICKUPS);
+
+	// Timer
+	timer_size = window->getSize().x - 2 * tile.getSize().x;
+	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
+	timer.setFillColor(sf::Color(68, 183, 64, 255));
+	timer.setPosition(sf::Vector2f(tile.getSize().x, TOP_MARGIN - 2 * tile.getSize().y));
+	start = clock();
 }
 
 LevelScene::~LevelScene()
 {
 	delete snake;
+}
+void LevelScene::timerHandler()
+{
+	time_t now;
+	time_t time_to_solve;
+
+	now = clock();
+	time_to_solve = 100000 - (clock() - start);
+	//zmanjsaj velikost
+	timer.setSize(sf::Vector2f(timer_size*(double)time_to_solve / 100000, tile.getSize().y));
+	if (time_to_solve < 0)
+		timerReset();
+}
+
+void LevelScene::timerReset()
+{
+	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
+	start = clock();
+	delete snake;
+	snake = new Snake(window, asset_manager, scene, PICKUPS);
+	clearLevel();
+	placePickups(PICKUPS);
+
 }
 
 void LevelScene::handleInput()
@@ -98,6 +128,10 @@ void LevelScene::handleLogic()
 void LevelScene::handleRender()
 {
     window->clear();
+
+	window->draw(timer);
+	timerHandler();
+
 
     for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++) {

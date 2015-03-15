@@ -24,11 +24,18 @@ public:
     void clearLevel();
     void placePickups(int count = 10);
 
+	void timerHandler();
+	void timerReset();
+
 private:
     int scene[HEIGHT][WIDTH];
 	sf::RectangleShape tile;
 	Snake *snake;
     int speed;
+	sf::RectangleShape timer;
+	double timer_size;
+	time_t start;
+
 };
 
 #endif // LEVELSCENE_H
