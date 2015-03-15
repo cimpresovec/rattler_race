@@ -42,13 +42,11 @@ LevelScene::~LevelScene()
 }
 void LevelScene::timerHandler()
 {
-	time_t now;
 	time_t time_to_solve;
 
-	now = clock();
-	time_to_solve = kLevelPlayTime - (clock() - start) / CLOCKS_PER_SEC;
+	time_to_solve = kLevelPlayTime - (int)((clock() - start) / CLOCKS_PER_SEC);
 	//zmanjsaj velikost
-	timer.setSize(sf::Vector2f(timer_size * (double)time_to_solve / kLevelPlayTime, tile.getSize().y));
+	timer.setSize(sf::Vector2f(timer_size * (double)time_to_solve / (double)kLevelPlayTime, tile.getSize().y));
 
 	if (time_to_solve <= 0)
 		timerReset();
@@ -62,7 +60,6 @@ void LevelScene::timerReset()
 	snake = new Snake(window, asset_manager, scene, PICKUPS);
 	clearLevel();
 	placePickups(PICKUPS);
-
 }
 
 void LevelScene::handleInput()
@@ -145,7 +142,7 @@ void LevelScene::handleInput()
 
 void LevelScene::handleLogic()
 {
-
+	timerHandler();
 }
 
 void LevelScene::handleRender()
@@ -153,7 +150,6 @@ void LevelScene::handleRender()
     window->clear();
 
 	window->draw(timer);
-	timerHandler();
 
     for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++) {
