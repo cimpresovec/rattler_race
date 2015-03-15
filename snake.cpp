@@ -88,7 +88,7 @@ int Snake::detectCollision()
         pickups--;
 
         if (pickups == 0)
-            scene[WIDTH / 2 - 1][HEIGHT] = 1;
+            scene[WIDTH / 2][0] = 1;
 
         return 1;
     }
