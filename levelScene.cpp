@@ -85,7 +85,12 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "up") {
 				snake->setDirection("up");
 				speed = 0;
-				snake->moveSnake();
+				if (snake->moveSnake() == 0){
+					delete snake;
+					snake = new Snake(window, asset_manager, scene, PICKUPS);
+					clearLevel();
+					placePickups(PICKUPS);
+				}
 			}
 		}
 
@@ -94,7 +99,12 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "left") {
 				snake->setDirection("left");
 				speed = 0;
-				snake->moveSnake();
+				if (snake->moveSnake() == 0){
+					delete snake;
+					snake = new Snake(window, asset_manager, scene, PICKUPS);
+					clearLevel();
+					placePickups(PICKUPS);
+				}
 			}
 		}
 
@@ -103,7 +113,12 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "down") {
 				snake->setDirection("down");
 				speed = 0;
-				snake->moveSnake();
+				if (snake->moveSnake() == 0){
+					delete snake;
+					snake = new Snake(window, asset_manager, scene, PICKUPS);
+					clearLevel();
+					placePickups(PICKUPS);
+				}
 			}
 		}
 
@@ -112,7 +127,12 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "right") {
 				snake->setDirection("right");
 				speed = 0;
-				snake->moveSnake();
+				if (snake->moveSnake() == 0){
+					delete snake;
+					snake = new Snake(window, asset_manager, scene, PICKUPS);
+					clearLevel();
+					placePickups(PICKUPS);
+				}
 			}
 		}
 
