@@ -85,6 +85,8 @@ void Snake::addPart()
     body.rect.setSize(tileSize);
 	body.position.x = snake[snake.size() - 1].lastPosition.x;
     body.position.y = snake[snake.size() - 1].lastPosition.y;
+	body.lastPosition.x = snake[snake.size() - 1].lastPosition.x;
+	body.lastPosition.y = snake[snake.size() - 1].lastPosition.y;
 	snake.push_back(body);
 }
 
@@ -105,7 +107,9 @@ void Snake::newStart()
     SnakeTile head;
     head.rect.setSize(tileSize);
     head.position.x = (int)WIDTH / (int)2;
-    head.position.y = HEIGHT - 1;
+    head.position.y = HEIGHT - 3;
+	head.lastPosition.x = (int)WIDTH / (int)2;
+	head.lastPosition.y = HEIGHT - 2;
     snake.push_back(head);
     direction = "up";
 
