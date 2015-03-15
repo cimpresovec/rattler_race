@@ -17,7 +17,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	memset(this->scene, 0, sizeof(this->scene) / sizeof(this->scene[0]));
 
 	//Uncomment the asset_manager stuff to get actual level loading
-	const int level_index = 1;//asset_manager->selected_level;
+	const int level_index = asset_manager->selected_level + 1;
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
@@ -159,7 +159,6 @@ void LevelScene::loadLevel(std::string level_name)
 			continue;
 
 		this->scene[arrayIndex % HEIGHT][arrayIndex / WIDTH] = (int)(c - '0');
-
 		++arrayIndex;
 	}
 
