@@ -13,9 +13,13 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y-TOP_MARGIN) / (double)HEIGHT));
     tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
 
-	for (int i = 0; i < HEIGHT; i++)
-		for (int j = 0; j < WIDTH; j++)
-			this->scene[i][j] = asset_manager->scene[i][j];
+    //Reset the level
+	memset(this->scene, 0, sizeof(this->scene) / sizeof(this->scene[0]));
+
+	//Uncomment the asset_manager stuff to get actual level loading
+	const int level_index = 1;//asset_manager->selected_level;
+	std::string level = "level_" + std::to_string(level_index) + ".lvl";
+	this->loadLevel(level);
 
     snake = new Snake(window, asset_manager, scene);
 }
@@ -132,4 +136,32 @@ void LevelScene::handleRender()
 	// END snake
 
     window->display();
+}
+
+void LevelScene::loadLevel(std::string level_name)
+{
+	std::ifstream file;
+	file.open("levels/" + level_name, std::ifstream::in);
+
+	if (!file.is_open())
+	{
+		std::cout << "Level reading error. Unable to load level: " + level_name + "\r\n";
+		return;
+	}
+
+	char c;
+	unsigned short arrayIndex = 0;
+
+	while (file.good())
+	{
+		c = file.get();
+		if (c < '0' || c > '9')
+			continue;
+
+		this->scene[arrayIndex % HEIGHT][arrayIndex / WIDTH] = (int)(c - '0');
+
+		++arrayIndex;
+	}
+
+	file.close();
 }

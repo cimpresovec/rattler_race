@@ -7,6 +7,9 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
     this->event = event;
     next_scene = none;
 
+    buttonSize = 0;
+	spaceBetween = 0;
+
 	srand(time(NULL));
 
 	// Dvet gumbov pa 1/10 gumba razmaka
@@ -61,7 +64,6 @@ void MainMenu::handleInput()
     }
 
 	// Mouse input
-
 	mouseX = sf::Mouse::getPosition(*window).x;
 	mouseY = sf::Mouse::getPosition(*window).y;
 
@@ -69,92 +71,26 @@ void MainMenu::handleInput()
 	// Load levels here
 	
 	int j = -1;
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 30; ++i) 
+	{
 		if ((i % BUTTONS_IN_ROW) == 0)
 			j++;
 
 		if (((mouseX > lvlBtn[i].getPosition().x) && (mouseX < lvlBtn[i].getPosition().x + buttonSize)) &&
-			((mouseY > lvlBtn[i].getPosition().y) && (mouseY < lvlBtn[i].getPosition().y + buttonSize))) {
-
-			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 200));
-
-			switch (i) {
-			case 0:
-				// Level 1
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					for (int i = 0; i < HEIGHT; i++) {
-						for (int j = 0; j < WIDTH; j++) {
-							if (i == 0 || j == 0 || i == (33 - 1) || j == (33 - 1))
-								asset_manager->scene[i][j] = 0;
-							else if (i == 10 && j > 5 && j < 27) {
-								asset_manager->scene[i][j] = 0;
-							}
-							else if (i == 22 && j > 5 && j < 27) {
-								asset_manager->scene[i][j] = 0;
-							}
-							else {
-								int tmp = rand() % 100;
-								if (tmp > 98) {
-									asset_manager->scene[i][j] = 2;
-								}
-								else if (tmp > 97) {
-									asset_manager->scene[i][j] = 3;
-								}
-								else {
-									asset_manager->scene[i][j] = 1;
-								}
-							}
-						}
-					}
-					next_scene = level;
-				}
-				break;
-			case 1:
-				// Level 2
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					for (int i = 0; i < HEIGHT; i++) {
-						for (int j = 0; j < WIDTH; j++) {
-							if (i == 0 || j == 0 || i == (33 - 1) || j == (33 - 1))
-								asset_manager->scene[i][j] = 0;
-							else if (j == 10 && i > 5 && i < 27) {
-								asset_manager->scene[i][j] = 0;
-							}
-							else if (j == 22 && i > 5 && i < 27) {
-								asset_manager->scene[i][j] = 0;
-							}
-							else {
-								int tmp = rand() % 100;
-								if (tmp > 98) {
-									asset_manager->scene[i][j] = 2;
-								}
-								else if (tmp > 97) {
-									asset_manager->scene[i][j] = 3;
-								}
-								else {
-									asset_manager->scene[i][j] = 1;
-								}
-							}
-						}
-					}
-					next_scene = level;
-				}
-				break;
-			case 2:
-				// Level 3
-				break;
-			case 3:
-				// Level 4
-				break;
-			case 4:
-				// Level 5
-				break;
-			default:
-				break;
+			((mouseY > lvlBtn[i].getPosition().y) && (mouseY < lvlBtn[i].getPosition().y + buttonSize)))
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				asset_manager->selected_level = i;
+				next_scene = level;
 			}
 
+			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 200));
 		}
 		else
+		{
 			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 255));
+		}
 	}
 }
 
@@ -177,7 +113,7 @@ void MainMenu::handleRender()
 			j++;
 		lvlBtn[i].setPosition(spaceBetween * ((i%BUTTONS_IN_ROW) + 1) + buttonSize * (i%BUTTONS_IN_ROW), spaceBetween * (j + 1) + buttonSize * j);
 		if (i < 9)
-			lvlText.setString("0"+std::to_string(i+1));
+			lvlText.setString("0" + std::to_string(i + 1));
 		else
 			lvlText.setString(std::to_string(i + 1));
 		lvlText.setPosition(((spaceBetween + buttonSize / 2.0) + (buttonSize + spaceBetween) * (i%BUTTONS_IN_ROW)) - (buttonSize / 4.0), (spaceBetween + buttonSize / 2.0) + (buttonSize + spaceBetween) * (j%BUTTONS_IN_ROW) - (buttonSize / 4.0));

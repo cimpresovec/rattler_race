@@ -6,6 +6,8 @@
 #include "gameScene.h"
 #include "assetManager.h"
 #include "snake.h"
+#include <string>
+#include <fstream>
 
 class LevelScene : public GameScene
 {
@@ -16,11 +18,14 @@ public:
     void handleInput();
     void handleLogic();
     void handleRender();
+
+    void loadLevel(std::string level_name);
+
 private:
     int scene[HEIGHT][WIDTH];
 	sf::RectangleShape tile;
 	Snake *snake;
-	int speed = 0;
+	int speed;
 };
 
 #endif // LEVELSCENE_H

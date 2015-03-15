@@ -20,8 +20,8 @@ private:
     int mouseX;
     int mouseY;
 
-	double buttonSize = 0;
-	double spaceBetween = 0;
+	double buttonSize;
+	double spaceBetween;
 
 	sf::RectangleShape background;
 

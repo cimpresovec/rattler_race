@@ -31,3 +31,5 @@ rattler_race
 *.exe
 *.out
 *.app
+
+sfml-app

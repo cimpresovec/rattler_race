@@ -20,7 +20,7 @@ public:
     ~AssetManager();
 
     bool loadTexture(const std::string file);
-	int scene[HEIGHT][WIDTH];
+	int selected_level;
     sf::Texture* getTexture(const std::string name);
     sf::Font* getFont();
 };
