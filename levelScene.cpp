@@ -84,12 +84,9 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "up") {
 				snake->setDirection("up");
 				speed = 0;
-				if (snake->moveSnake() == 0){
-					delete snake;
-					snake = new Snake(window, asset_manager, scene, PICKUPS);
-					clearLevel();
-					placePickups(PICKUPS);
-				}
+				
+				if (snake->moveSnake() == 0)
+					is_game_over = true;
 			}
 		}
 
@@ -98,12 +95,8 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "left") {
 				snake->setDirection("left");
 				speed = 0;
-				if (snake->moveSnake() == 0){
-					delete snake;
-					snake = new Snake(window, asset_manager, scene, PICKUPS);
-					clearLevel();
-					placePickups(PICKUPS);
-				}
+				if (snake->moveSnake() == 0)
+					is_game_over = true;
 			}
 		}
 
@@ -112,12 +105,8 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "down") {
 				snake->setDirection("down");
 				speed = 0;
-				if (snake->moveSnake() == 0){
-					delete snake;
-					snake = new Snake(window, asset_manager, scene, PICKUPS);
-					clearLevel();
-					placePickups(PICKUPS);
-				}
+				if (snake->moveSnake() == 0)
+					is_game_over = true;
 			}
 		}
 
@@ -126,12 +115,8 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "right") {
 				snake->setDirection("right");
 				speed = 0;
-				if (snake->moveSnake() == 0){
-					delete snake;
-					snake = new Snake(window, asset_manager, scene, PICKUPS);
-					clearLevel();
-					placePickups(PICKUPS);
-				}
+				if (snake->moveSnake() == 0)
+					is_game_over = true;
 			}
 		}
 
