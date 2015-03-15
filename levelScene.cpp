@@ -24,7 +24,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 
 	//Uncomment the asset_manager stuff to get actual level loading
-	const int level_index = asset_manager->selected_level + 1;
+	const int level_index = asset_manager->selected_level;
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
@@ -84,7 +84,7 @@ void LevelScene::handleInput()
 			if (snake->getDirection() != "up") {
 				snake->setDirection("up");
 				speed = 0;
-				
+
 				if (snake->moveSnake() == 0)
 					is_game_over = true;
 			}
@@ -210,8 +210,8 @@ void LevelScene::handleRender()
             delete snake;
             snake = new Snake(window, asset_manager, scene, PICKUPS);
 
-            const int level_index = asset_manager->selected_level + 1;
-            std::string level = "level_" + std::to_string(level_index + 1) + ".lvl";
+            asset_manager->selected_level++;
+            std::string level = "level_" + std::to_string(asset_manager->selected_level) + ".lvl";
             this->loadLevel(level);
         }
 

@@ -81,7 +81,7 @@ void MainMenu::handleInput()
 		{
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 			{
-				asset_manager->selected_level = i;
+				asset_manager->selected_level = i + 1;
 				next_scene = level;
 			}
 
