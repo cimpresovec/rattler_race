@@ -1,9 +1,10 @@
 #include "snake.h"
 
 
-Snake::Snake(sf::RenderWindow *window, int scene[HEIGHT][WIDTH])
+Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH])
 {
 	this->window = window;
+	this->manager = manager;
 	this->tileSize = sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y - TOP_MARGIN) / (double)HEIGHT);
     direction = "up";
 	
@@ -87,6 +88,8 @@ void Snake::addPart()
     body.position.y = snake[snake.size() - 1].lastPosition.y;
 	body.lastPosition.x = snake[snake.size() - 1].lastPosition.x;
 	body.lastPosition.y = snake[snake.size() - 1].lastPosition.y;
+	body.rect.setTexture(manager->getTexture("assets/snake.png"));
+	body.rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
 	snake.push_back(body);
 }
 
@@ -110,11 +113,13 @@ void Snake::newStart()
     head.position.y = HEIGHT - 3;
 	head.lastPosition.x = (int)WIDTH / (int)2;
 	head.lastPosition.y = HEIGHT - 2;
+	head.rect.setTexture(manager->getTexture("assets/snake.png"));
+	head.rect.setTextureRect(sf::Rect<int>(0,0,64,64));
     snake.push_back(head);
     direction = "up";
 
     this->addPart();
-    this->addPart();
+	this->addPart();
 }
 
 std::string Snake::getDirection() {

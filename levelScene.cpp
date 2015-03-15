@@ -17,7 +17,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 		for (int j = 0; j < WIDTH; j++)
 			this->scene[i][j] = asset_manager->scene[i][j];
 
-    snake = new Snake(window, scene);
+    snake = new Snake(window, asset_manager, scene);
 }
 
 LevelScene::~LevelScene()

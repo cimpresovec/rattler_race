@@ -11,7 +11,7 @@
 class Snake
 {
 public:
-    Snake(sf::RenderWindow *window, int scene[HEIGHT][WIDTH]);
+	Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
 	void moveSnake();
@@ -25,6 +25,7 @@ public:
 
 private:
 	sf::RenderWindow *window;
+	AssetManager *manager;
 	sf::Vector2f tileSize;
 	std::string direction;
     int scene[HEIGHT][WIDTH];
