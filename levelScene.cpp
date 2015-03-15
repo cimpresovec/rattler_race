@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 
+const int kLevelPlayTime = 30;
+
 LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
     asset_manager = manager;
@@ -44,9 +46,9 @@ void LevelScene::timerHandler()
 	time_t time_to_solve;
 
 	now = clock();
-	time_to_solve = 100000 - (clock() - start) / CLOCKS_PER_SEC;
+	time_to_solve = kLevelPlayTime - (clock() - start) / CLOCKS_PER_SEC;
 	//zmanjsaj velikost
-	timer.setSize(sf::Vector2f(timer_size*(double)time_to_solve / 100000, tile.getSize().y));
+	timer.setSize(sf::Vector2f(timer_size * (double)time_to_solve / kLevelPlayTime, tile.getSize().y));
 
 	if (time_to_solve <= 0)
 		timerReset();
