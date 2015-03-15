@@ -14,7 +14,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
 
     //Reset the level
-	memset(this->scene, 0, sizeof(this->scene) / sizeof(this->scene[0]));
+	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 
 	//Uncomment the asset_manager stuff to get actual level loading
 	const int level_index = asset_manager->selected_level + 1;
