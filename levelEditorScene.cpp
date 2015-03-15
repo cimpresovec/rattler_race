@@ -184,7 +184,7 @@ void LevelEditorScene::saveLevel(std::string level_name)
     {
         for (int j = 0; j < kLEVEL_SIDE_DIMENSION; ++j)
         {
-            char c = this->level_tiles[i][j] + '0';
+            char c = this->level_tiles[j][i] + '0';
             file.put(c);
         }
         file.put('\n');
