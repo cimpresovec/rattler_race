@@ -209,6 +209,8 @@ void LevelScene::handleRender()
             // GO TO NEXT LEVEL
             delete snake;
             snake = new Snake(window, asset_manager, scene, PICKUPS);
+			start = clock();
+			timer_size = window->getSize().x - 2 * tile.getSize().x;
 
             asset_manager->selected_level++;
             std::string level = "level_" + std::to_string(asset_manager->selected_level) + ".lvl";
