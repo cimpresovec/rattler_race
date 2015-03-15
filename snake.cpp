@@ -1,7 +1,7 @@
 #include "snake.h"
 
 
-Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH])
+Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH], int pickups)
 {
 	this->window = window;
 	this->manager = manager;
@@ -9,12 +9,7 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
     this->direction = "up";
 
     this->scene = scene;
-    this->pickableItemsNum = 0;
-
-    for (int i = 1; i < HEIGHT - 1; i++)
-        for (int j = 1; j < WIDTH - 1; j++)
-            if (scene[i][j] >= 2)
-                pickableItemsNum++;
+    this->pickups = pickups;
 
     this->start();
 }
@@ -90,14 +85,14 @@ int Snake::detectCollision()
     {
         this->addPart();
         scene[getSnakeTileX(0)][getSnakeTileY(0)] = 1;
-        pickableItemsNum--;
+        pickups--;
 
-        if (pickableItemsNum == 0)
+        if (pickups == 0)
             scene[WIDTH / 2 - 1][HEIGHT] = 1;
 
         return 1;
     }
-    else if (pickableItemsNum == 0 && getSnakeTileX(0) == 16 && getSnakeTileY(0) == 0)
+    else if (pickups == 0 && getSnakeTileX(0) == 16 && getSnakeTileY(0) == 0)
         return 2;
 
     return -1;

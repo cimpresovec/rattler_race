@@ -2,6 +2,7 @@
 #define LEVELSCENE_H
 
 #define SPEED 8
+#define PICKUPS 3
 
 #include "gameScene.h"
 #include "assetManager.h"
@@ -21,7 +22,7 @@ public:
 
     void loadLevel(std::string level_name);
     void clearLevel();
-    void placePickups(int count = 10);
+    void placePickups(int count = PICKUPS);
 
 private:
     int scene[HEIGHT][WIDTH];

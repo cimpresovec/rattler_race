@@ -11,7 +11,7 @@
 class Snake
 {
 public:
-    Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
+    Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH], int pickups);
 	~Snake();
 
     int moveSnake();
@@ -32,7 +32,7 @@ private:
 	std::string direction;
     int (*scene)[HEIGHT];
     int currentTilePosition;
-    int pickableItemsNum;
+    int pickups;
 
     struct SnakeTile
     {

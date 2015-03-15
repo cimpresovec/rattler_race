@@ -25,7 +25,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
-    snake = new Snake(window, asset_manager, scene);
+    snake = new Snake(window, asset_manager, scene, PICKUPS);
 }
 
 LevelScene::~LevelScene()
@@ -132,6 +132,7 @@ void LevelScene::handleRender()
 	// Snake
 	speed++;
 	snake->drawSnake();
+
     if (speed == SPEED && !levelDone)
     {
         int ret = snake->moveSnake();
@@ -139,14 +140,18 @@ void LevelScene::handleRender()
         if (ret == 0) //collision
         {
             delete snake;
-            snake = new Snake(window, asset_manager, scene);
+            snake = new Snake(window, asset_manager, scene, PICKUPS);
+            clearLevel();
+            placePickups(PICKUPS);
         }
         if (ret == 2) //level completed
+        {
             levelDone = true;
+            // GO TO NEXT LEVEL OR SMTHN
+        }
 
 		speed = 0;
-	}
-	// END snake
+    }
 
     window->display();
 }
@@ -188,6 +193,8 @@ void LevelScene::clearLevel()
 		for (int j = 0; j < HEIGHT; ++j)
 			if (this->scene[i][j] == 2)
 				this->scene[i][j] = 1;
+
+    this->scene[16][0] = 0;
 }
 
 void LevelScene::placePickups(int count)
