@@ -9,6 +9,7 @@
 #include "snake.h"
 #include <string>
 #include <fstream>
+#include <ctime>
 
 class LevelScene : public GameScene
 {

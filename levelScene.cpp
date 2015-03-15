@@ -44,10 +44,11 @@ void LevelScene::timerHandler()
 	time_t time_to_solve;
 
 	now = clock();
-	time_to_solve = 100000 - (clock() - start);
+	time_to_solve = 100000 - (clock() - start) / CLOCKS_PER_SEC;
 	//zmanjsaj velikost
 	timer.setSize(sf::Vector2f(timer_size*(double)time_to_solve / 100000, tile.getSize().y));
-	if (time_to_solve < 0)
+
+	if (time_to_solve <= 0)
 		timerReset();
 }
 
@@ -131,7 +132,6 @@ void LevelScene::handleRender()
 
 	window->draw(timer);
 	timerHandler();
-
 
     for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++) {
