@@ -23,7 +23,6 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     //Reset the level
 	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 
-	//Uncomment the asset_manager stuff to get actual level loading
 	const int level_index = asset_manager->selected_level;
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
@@ -63,8 +62,6 @@ void LevelScene::handleInput()
         {
             next_scene = quit;
         }
-
-
 
         if (event->type == sf::Event::KeyReleased)
         {
@@ -226,11 +223,11 @@ void LevelScene::handleRender()
 void LevelScene::resetLevel()
 {
 	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
-	start = clock();
 	delete snake;
 	snake = new Snake(window, asset_manager, scene, PICKUPS);
 	clearLevel();
 	placePickups(PICKUPS);
+	start = clock();
 }
 
 void LevelScene::loadLevel(std::string level_name)
