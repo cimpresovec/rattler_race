@@ -38,7 +38,7 @@ private:
 	time_t start;
 
 
-    bool is_game_over;
+    bool isGameOver;
     void showGameOverMenu();
 };
 
