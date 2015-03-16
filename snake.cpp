@@ -23,31 +23,14 @@ int Snake::moveSnake()
     for (unsigned int i = 0; i < snake.size(); i++)
     {
         if (i == 0)
-        {
-            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
             snake[i].rect.setTextureRect(sf::Rect<int>(0, 0, 64, 64));
-            /*
-            if (direction == "down")
-                snake[i].rect.setRotation(180);
-            else if (direction == "left")
-                snake[i].rect.setRotation(-90);
-            else if (direction == "right")
-                snake[i].rect.setRotation(90);
-            */
-        }
         else if (i == snake.size() - 1)
-        {
-            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
             snake[i].rect.setTextureRect(sf::Rect<int>(192, 0, 64, 64));
-        }
         else
-        {
-            snake[i].rect.setTexture(manager->getTexture("assets/snake.png"));
             snake[i].rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
-        }
 
         snake[i].lastPosition = snake[i].position;
-	}
+    }
 
 	if (direction == "up")
 		snake[0].position.y--;
@@ -68,7 +51,73 @@ void Snake::drawSnake()
 {
     for (unsigned int i = 0; i < snake.size(); i++)
     {
-		snake[i].rect.setPosition(snake[i].position.x * tileSize.x, snake[i].position.y * tileSize.y + TOP_MARGIN);
+        snake[i].rect.setPosition(snake[i].position.x * tileSize.x + tileSize.x/2, snake[i].position.y * tileSize.y + TOP_MARGIN + tileSize.y/2);
+
+        if (i == 0)
+        {
+            if (direction == "up")
+                snake[i].rect.setRotation(0.0);
+            else if (direction == "left")
+                snake[i].rect.setRotation(-90.0);
+            else if (direction == "right")
+                snake[i].rect.setRotation(90.0);
+            else if (direction == "down")
+                snake[i].rect.setRotation(180.0);
+        }
+        else if (i == snake.size() - 1) //tail
+        {
+            if (snake[i-1].position.x > snake[i].position.x)
+                snake[i].rect.setRotation(-90.0);
+            else if (snake[i-1].position.x < snake[i].position.x)
+                snake[i].rect.setRotation(90.0);
+            else if (snake[i-1].position.y > snake[i].position.y)
+                snake[i].rect.setRotation(0.0);
+            else if (snake[i-1].position.y < snake[i].position.y)
+                snake[i].rect.setRotation(180.0);
+        }
+        else //tiles between head and tail
+        {
+            snake[i].rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+
+            if (snake[i-1].position.x == snake[i+1].position.x) //vertical texture
+                snake[i].rect.setRotation(0.0);
+            else if (snake[i-1].position.y == snake[i+1].position.y) //horizontal texture
+                snake[i].rect.setRotation(90.0);
+            else //turn texture
+            {
+                snake[i].rect.setTextureRect(sf::Rect<int>(64, 0, 64, 64));
+
+                if (snake[i-1].position.x < snake[i+1].position.x && snake[i-1].position.y > snake[i+1].position.y)
+                {
+                    if (snake[i-1].position.x == snake[i].position.x)
+                        snake[i].rect.setRotation(0.0);
+                    else
+                        snake[i].rect.setRotation(180.0);
+                }
+                else if (snake[i-1].position.x > snake[i+1].position.x && snake[i-1].position.y < snake[i+1].position.y)
+                {
+                    if (snake[i-1].position.x == snake[i].position.x)
+                        snake[i].rect.setRotation(180.0);
+                    else
+                        snake[i].rect.setRotation(0.0);
+                }
+                else if (snake[i-1].position.x < snake[i+1].position.x && snake[i-1].position.y < snake[i+1].position.y)
+                {
+                    if (snake[i-1].position.x == snake[i].position.x)
+                        snake[i].rect.setRotation(-90.0);
+                    else
+                        snake[i].rect.setRotation(90.0);
+                }
+                else if (snake[i-1].position.x > snake[i+1].position.x && snake[i-1].position.y > snake[i+1].position.y)
+                {
+                    if (snake[i-1].position.x == snake[i].position.x)
+                        snake[i].rect.setRotation(90.0);
+                    else
+                        snake[i].rect.setRotation(-90.0);
+                }
+            }
+        }
+
 		window->draw(snake[i].rect);
 	}
 }
@@ -117,6 +166,7 @@ void Snake::addPart()
 	body.lastPosition.y = snake[snake.size() - 1].lastPosition.y;
 	body.rect.setTexture(manager->getTexture("assets/snake.png"));
     body.rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+    body.rect.setOrigin(tileSize.x / 2.0, tileSize.y / 2.0);
 	snake.push_back(body);
 }
 
@@ -140,6 +190,7 @@ void Snake::start()
 	head.lastPosition.y = HEIGHT - 2;
 	head.rect.setTexture(manager->getTexture("assets/snake.png"));
 	head.rect.setTextureRect(sf::Rect<int>(0,0,64,64));
+    head.rect.setOrigin(tileSize.x / 2.0, tileSize.y / 2.0);
     snake.push_back(head);
     direction = "up";
 
