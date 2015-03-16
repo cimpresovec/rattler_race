@@ -27,7 +27,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
-    snake = new Snake(window, asset_manager, scene, PICKUPS);
+    snake = new Snake(window, asset_manager, scene);
 
 	// Timer
 	timer_size = window->getSize().x - 2 * tile.getSize().x;
@@ -136,13 +136,13 @@ void LevelScene::handleLogic()
     {
         // GO TO NEXT LEVEL
         delete snake;
-        snake = new Snake(window, asset_manager, scene, PICKUPS);
         start = clock();
         timer_size = window->getSize().x - 2 * tile.getSize().x;
 
         asset_manager->selected_level++;
         std::string level = "level_" + std::to_string(asset_manager->selected_level) + ".lvl";
         this->loadLevel(level);
+        snake = new Snake(window, asset_manager, scene);
     }
 }
 
@@ -199,9 +199,9 @@ void LevelScene::handleRender()
 			gameOverSetup = true;
 		}
 
-		window->draw(underlay);
-		window->draw(gameOverText);
         snake->drawSnake();
+		window->draw(underlay);
+        window->draw(gameOverText);
 		window->display();
 
 		return;
@@ -224,7 +224,7 @@ void LevelScene::resetLevel()
 {
 	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
 	delete snake;
-	snake = new Snake(window, asset_manager, scene, PICKUPS);
+    snake = new Snake(window, asset_manager, scene);
 	clearLevel();
 	placePickups(PICKUPS);
 	start = clock();
@@ -268,7 +268,7 @@ void LevelScene::clearLevel()
 			if (this->scene[i][j] == 2)
 				this->scene[i][j] = 1;
 
-    this->scene[16][0] = 0;
+    this->scene[(WIDTH-1)/2][0] = 0;
 }
 
 void LevelScene::placePickups(int count)

@@ -11,7 +11,7 @@
 class Snake
 {
 public:
-    Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH], int pickups);
+    Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
     int moveSnake();

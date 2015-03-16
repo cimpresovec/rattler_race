@@ -1,7 +1,7 @@
 #include "snake.h"
 
 
-Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH], int pickups)
+Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH])
 {
 	this->window = window;
 	this->manager = manager;
@@ -9,7 +9,12 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
     this->direction = "up";
 
     this->scene = scene;
-    this->pickups = pickups;
+
+    this->pickups = 0;
+    for (int i = 1; i < HEIGHT - 1; i++)
+        for (int j = 1; j < WIDTH - 1; j++)
+            if (scene[i][j] >= 2)
+                this->pickups++;
 
     this->start();
 }
@@ -137,7 +142,7 @@ int Snake::detectCollision()
         pickups--;
 
         if (pickups == 0)
-            scene[WIDTH / 2][0] = 1;
+            scene[(WIDTH - 1) / 2][0] = 1;
 
         return 1;
     }
@@ -164,8 +169,8 @@ void Snake::addPart()
     body.position.y = snake[snake.size() - 1].lastPosition.y;
 	body.lastPosition.x = snake[snake.size() - 1].lastPosition.x;
 	body.lastPosition.y = snake[snake.size() - 1].lastPosition.y;
-	body.rect.setTexture(manager->getTexture("assets/snake.png"));
-    body.rect.setTextureRect(sf::Rect<int>(128, 0, 64, 64));
+    body.rect.setTexture(manager->getTexture("assets/snake.png"));
+    body.rect.setTextureRect(sf::Rect<int>(194, 0, 64, 64));
     body.rect.setOrigin(tileSize.x / 2.0, tileSize.y / 2.0);
 	snake.push_back(body);
 }
