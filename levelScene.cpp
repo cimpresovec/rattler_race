@@ -76,50 +76,47 @@ void LevelScene::handleInput()
             }
         }
 
-        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::W || event->key.code == sf::Keyboard::Up))
-		{
-			if (snake->getDirection() != "up") {
-				snake->setDirection("up");
-				speed = 0;
+		if (!isGameOver){
+			if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::W || event->key.code == sf::Keyboard::Up))
+			{
+				if (snake->getDirection() != "up") {
+					snake->setDirection("up");
+					speed = 0;
 
-				if (snake->moveSnake() == 0)
-                    isGameOver = true;
+					if (snake->moveSnake() == 0)
+						isGameOver = true;
+				}
 			}
-		}
 
-        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::A || event->key.code == sf::Keyboard::Left))
-		{
-			if (snake->getDirection() != "left") {
-				snake->setDirection("left");
-				speed = 0;
-				if (snake->moveSnake() == 0)
-                    isGameOver = true;
+			if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::A || event->key.code == sf::Keyboard::Left))
+			{
+				if (snake->getDirection() != "left") {
+					snake->setDirection("left");
+					speed = 0;
+					if (snake->moveSnake() == 0)
+						isGameOver = true;
+				}
 			}
-		}
 
-        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::S || event->key.code == sf::Keyboard::Down))
-		{
-			if (snake->getDirection() != "down") {
-				snake->setDirection("down");
-				speed = 0;
-				if (snake->moveSnake() == 0)
-                    isGameOver = true;
+			if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::S || event->key.code == sf::Keyboard::Down))
+			{
+				if (snake->getDirection() != "down") {
+					snake->setDirection("down");
+					speed = 0;
+					if (snake->moveSnake() == 0)
+						isGameOver = true;
+				}
 			}
-		}
 
-        if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::D || event->key.code == sf::Keyboard::Right))
-		{
-			if (snake->getDirection() != "right") {
-				snake->setDirection("right");
-				speed = 0;
-				if (snake->moveSnake() == 0)
-                    isGameOver = true;
+			if (event->type == sf::Event::KeyPressed && (event->key.code == sf::Keyboard::D || event->key.code == sf::Keyboard::Right))
+			{
+				if (snake->getDirection() != "right") {
+					snake->setDirection("right");
+					speed = 0;
+					if (snake->moveSnake() == 0)
+						isGameOver = true;
+				}
 			}
-		}
-
-		if (event->type == sf::Event::KeyPressed && event->key.code == sf::Keyboard::Q)
-		{
-			snake->addPart();
 		}
     }
 }
