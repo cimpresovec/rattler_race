@@ -25,6 +25,8 @@ public:
     int getSnakeTileX(int index);
     int getSnakeTileY(int index);
 
+    bool has_moved;
+
 private:
 	sf::RenderWindow *window;
 	AssetManager *manager;

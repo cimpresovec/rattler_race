@@ -16,6 +16,8 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
             if (scene[i][j] >= 2)
                 this->pickups++;
 
+    has_moved = false;
+
     this->start();
 }
 
@@ -24,6 +26,15 @@ Snake::~Snake() { }
 int Snake::moveSnake()
 {
     int ret = detectCollision();
+
+    //For balls and CPU snakes
+    has_moved = true;
+
+    //Clear wall under snake
+    for (unsigned int i = 1; i < snake.size(); i++)
+    {
+        scene[(int)snake[i].position.x][(int)snake[i].position.y] = 1;
+    }
 
     for (unsigned int i = 0; i < snake.size(); i++)
     {
@@ -46,8 +57,12 @@ int Snake::moveSnake()
 	else if (direction == "right")
 		snake[0].position.x++;
 
+    //Move to new positions, and set scene to wall where snake is located
     for (unsigned int i = 1; i < snake.size(); i++)
+    {
 		snake[i].position = snake[i - 1].lastPosition;
+        scene[(int)snake[i].position.x][(int)snake[i].position.y] = 0;
+    }
 
     return ret;
 }

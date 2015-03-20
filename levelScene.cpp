@@ -21,7 +21,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
 
     //Reset the level
-	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
+    memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 
 	const int level_index = asset_manager->selected_level;
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
@@ -30,11 +30,14 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     snake = new Snake(window, asset_manager, scene);
 
 	// Timer
-	timer_size = window->getSize().x - 2 * tile.getSize().x;
+    timer_size = window->getSize().x - 2 * tile.getSize().x;
 	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
 	timer.setFillColor(sf::Color(68, 183, 64, 255));
 	timer.setPosition(sf::Vector2f(tile.getSize().x, TOP_MARGIN - 2 * tile.getSize().y));
 	start = clock();
+
+    //Balls
+    balls.push_back(Ball(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/tiles1-5.png")));
 }
 
 LevelScene::~LevelScene()
@@ -125,6 +128,16 @@ void LevelScene::handleLogic()
 {
 	timerHandler();
 
+    //Ball movement
+    if (snake->has_moved)
+    {
+        for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
+        {
+            it->handleLogic(scene);
+        }
+        snake->has_moved = false;
+    }
+
     if (snake->detectCollision() == 0) //collision
     {
         isGameOver = true;
@@ -146,6 +159,7 @@ void LevelScene::handleLogic()
 void LevelScene::handleRender()
 {
     window->clear();
+
 
 	window->draw(timer);
 
@@ -176,6 +190,12 @@ void LevelScene::handleRender()
 				break;
 			}
 		}
+    }
+
+    //Draw balls
+    for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
+    {
+        it->handleRender(window);
     }
 
     if (isGameOver)

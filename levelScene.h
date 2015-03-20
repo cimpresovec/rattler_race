@@ -7,6 +7,7 @@
 #include "gameScene.h"
 #include "assetManager.h"
 #include "snake.h"
+#include "ball.h"
 #include <string>
 #include <fstream>
 #include <ctime>
@@ -37,6 +38,7 @@ private:
 	double timer_size;
 	time_t start;
 
+    std::vector<Ball> balls;
 
     bool isGameOver;
     void showGameOverMenu();

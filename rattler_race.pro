@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     levelScene.cpp \
     levelEditorScene.cpp \
     settingsScene.cpp \
-    snake.cpp
+    snake.cpp \
+    ball.cpp
 
 HEADERS += \
     gameScene.h \
@@ -22,5 +23,6 @@ HEADERS += \
     levelScene.h \
     levelEditorScene.h \
     settingsScene.h \
-    snake.h
+    snake.h \
+    ball.h
 
