@@ -15,7 +15,7 @@ Ball::Ball(const int x, const int y, const int win_x, const int win_y, sf::Textu
     this->prev_tile = 1;
 }
 
-void Ball::handleLogic(int scene[][HEIGHT])
+void Ball::handleLogic(int scene[][HEIGHT], const Snake &snake)
 {
     //Restore scene tile
     scene[position.x][position.y] = prev_tile;
@@ -23,11 +23,22 @@ void Ball::handleLogic(int scene[][HEIGHT])
     //First do horizontal movement
     position.x += speed.x;
 
-    //Check collision
+    //Check next collision
     if (scene[position.x][position.y] == 0)
     {
         position.x -= speed.x;
         speed.x = -speed.x;
+    }
+    else
+    {
+        for (unsigned int i = 1; i < snake.snake.size(); ++i)
+        {
+            if (position.x == snake.snake[i].position.x && position.y == snake.snake[i].position.y)
+            {
+                position.x -= speed.x;
+                speed.x = -speed.x;
+            }
+        }
     }
 
     position.y += speed.y;
@@ -37,6 +48,17 @@ void Ball::handleLogic(int scene[][HEIGHT])
     {
         position.y -= speed.y;
         speed.y = -speed.y;
+    }
+    else
+    {
+        for (unsigned int i = 1; i < snake.snake.size(); ++i)
+        {
+            if (position.x == snake.snake[i].position.x && position.y == snake.snake[i].position.y)
+            {
+                position.y -= speed.y;
+                speed.y = -speed.y;
+            }
+        }
     }
 
     //Set hazard on scene

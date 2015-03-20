@@ -133,7 +133,7 @@ void LevelScene::handleLogic()
     {
         for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
         {
-            it->handleLogic(scene);
+            it->handleLogic(scene, *snake);
         }
         snake->has_moved = false;
     }

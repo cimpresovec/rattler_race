@@ -2,6 +2,7 @@
 #define BALL_H
 
 #include "assetManager.h"
+#include "snake.h"
 
 class Ball
 {
@@ -13,7 +14,7 @@ private:
 public:
     Ball(const int x, const int y, const int win_x, const int win_y, sf::Texture *tex);
 
-    void handleLogic(int scene[][HEIGHT]);
+    void handleLogic(int scene[][HEIGHT], const Snake &snake);
     void handleRender(sf::RenderWindow *window);
 };
 

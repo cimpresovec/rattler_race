@@ -30,12 +30,6 @@ int Snake::moveSnake()
     //For balls and CPU snakes
     has_moved = true;
 
-    //Clear wall under snake
-    for (unsigned int i = 1; i < snake.size(); i++)
-    {
-        scene[(int)snake[i].position.x][(int)snake[i].position.y] = 1;
-    }
-
     for (unsigned int i = 0; i < snake.size(); i++)
     {
         if (i == 0)
@@ -57,11 +51,10 @@ int Snake::moveSnake()
 	else if (direction == "right")
 		snake[0].position.x++;
 
-    //Move to new positions, and set scene to wall where snake is located
+    //Move to new positions
     for (unsigned int i = 1; i < snake.size(); i++)
     {
-		snake[i].position = snake[i - 1].lastPosition;
-        scene[(int)snake[i].position.x][(int)snake[i].position.y] = 0;
+        snake[i].position = snake[i - 1].lastPosition;
     }
 
     return ret;

@@ -27,6 +27,15 @@ public:
 
     bool has_moved;
 
+    struct SnakeTile
+    {
+        SnakeTile() {}
+        sf::RectangleShape rect;
+        sf::Vector2f position;
+        sf::Vector2f lastPosition;
+    };
+
+    std::vector<SnakeTile> snake;
 private:
 	sf::RenderWindow *window;
 	AssetManager *manager;
@@ -35,16 +44,6 @@ private:
     int (*scene)[HEIGHT];
     int currentTilePosition;
     int pickups;
-
-    struct SnakeTile
-    {
-		SnakeTile() {}
-		sf::RectangleShape rect;
-		sf::Vector2f position;
-		sf::Vector2f lastPosition;
-	};
-
-    std::vector<SnakeTile> snake;
 };
 
 #endif // SNAKE_H
