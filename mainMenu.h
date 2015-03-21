@@ -6,6 +6,10 @@
 
 #include "gameScene.h"
 #include "assetManager.h"
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <iostream>
 
 class MainMenu : public GameScene
 {
@@ -23,9 +27,15 @@ private:
 	double buttonSize;
 	double spaceBetween;
 
+	double rightBotX;
+	double rightBotY;
+
+	int avalibleLvls;
+
 	sf::RectangleShape background;
 
 	sf::RectangleShape lvlBtn[NUMBER_OF_LVLS];
+	sf::RectangleShape lvlEditorBtn;
 	sf::Text lvlText;
 
 };

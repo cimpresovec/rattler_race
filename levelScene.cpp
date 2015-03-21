@@ -149,7 +149,11 @@ void LevelScene::handleLogic()
         start = clock();
         timer_size = window->getSize().x - 2 * tile.getSize().x;
 
+		// For menu lvl lock
+		saveTheHighestCompletedLvl(asset_manager->selected_level);
+
         asset_manager->selected_level++;
+
         std::string level = "level_" + std::to_string(asset_manager->selected_level) + ".lvl";
         this->loadLevel(level);
         snake = new Snake(window, asset_manager, scene);
@@ -302,5 +306,23 @@ void LevelScene::placePickups(int count)
 		}
 
 		++loopCounter;
+	}
+}
+
+void LevelScene::saveTheHighestCompletedLvl(int lvl) {
+	std::ofstream lvlFile ("levels/lvlSave.lvl");
+	std::stringstream ss;
+	std::string lvlString = "";
+
+	ss << lvlFile.rdbuf();
+	lvlString = ss.str();
+
+	if (lvlString < std::to_string(lvl) || lvlString == "") {
+		if (lvlFile.is_open()) {
+			lvlFile << lvl;
+			lvlFile.close();
+		}
+		else
+			std::cout << "Unable to open file" << std::endl;
 	}
 }

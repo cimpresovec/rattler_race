@@ -11,6 +11,7 @@
 #include <string>
 #include <fstream>
 #include <ctime>
+#include <sstream>
 
 class LevelScene : public GameScene
 {
@@ -42,6 +43,7 @@ private:
 
     bool isGameOver;
     void showGameOverMenu();
+	void saveTheHighestCompletedLvl(int lvl);
 };
 
 #endif // LEVELSCENE_H
