@@ -161,8 +161,15 @@ void LevelScene::handleLogic()
         snake->has_moved = false;
     }
 
-    if (isGameOver)
-    	return;
+    if (isGameOver) return;
+
+    speed++;
+
+    if (speed == snakeSpeed)
+    {
+        snake->moveSnake();
+		speed = 0;
+    }
 
     const int collisionResult = snake->detectCollision();
     if (collisionResult == 0) //collision
@@ -300,14 +307,7 @@ void LevelScene::handleRender()
 	}
 
 	// Snake
-	speed++;
 	snake->drawSnake();
-
-    if (speed == snakeSpeed && !isGameOver)
-    {
-        snake->moveSnake();
-		speed = 0;
-    }
 
     window->display();
 }
