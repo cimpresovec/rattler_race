@@ -23,10 +23,24 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
 
 Snake::~Snake() { }
 
-int Snake::moveSnake()
+inline void Snake::setSelfWall()
 {
-    int ret = detectCollision();
+    for (unsigned int i = 0; i < snake.size(); ++i)
+    {
+        scene[(int)snake[i].position.x][(int)snake[i].position.y] = -1;
+    }
+}
 
+inline void Snake::clearSelfWall()
+{
+    for (unsigned int i = 0; i < snake.size(); ++i)
+    {
+        scene[(int)snake[i].position.x][(int)snake[i].position.y] = 1;
+    }
+}
+
+void Snake::moveSnake()
+{
     //For balls and CPU snakes
     has_moved = true;
 
@@ -56,8 +70,6 @@ int Snake::moveSnake()
     {
         snake[i].position = snake[i - 1].lastPosition;
     }
-
-    return ret;
 }
 
 void Snake::drawSnake()
@@ -137,9 +149,12 @@ void Snake::drawSnake()
 
 int Snake::detectCollision()
 {
+    //Clear collision tiles from underneeth, so we can normaly check for collision
+    //clearSelfWall();
+
     currentTilePosition = scene[getSnakeTileX(0)][getSnakeTileY(0)];
 
-    if (currentTilePosition == 0) //collision with wall
+    if (currentTilePosition == 0 || currentTilePosition == -1) //collision with wall
         return 0;
     else if (snakeSelfCollision(getSnakeTileX(0), getSnakeTileY(0))) //self collision
         return 0;
@@ -156,6 +171,9 @@ int Snake::detectCollision()
     }
     else if (pickups == 0 && getSnakeTileX(0) == (int)WIDTH / 2 && getSnakeTileY(0) == 0) //level completed
         return 2;
+
+    //Set collision tiles for balls and other snakes
+    //setSelfWall();
 
     return -1;
 }

@@ -14,7 +14,7 @@ public:
     Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][WIDTH]);
 	~Snake();
 
-    int moveSnake();
+    void moveSnake();
 	void drawSnake();
 	void setDirection(std::string direction);
 	std::string getDirection();
@@ -37,6 +37,9 @@ public:
 
     std::vector<SnakeTile> snake;
 private:
+    inline void setSelfWall();
+    inline void clearSelfWall();
+
 	sf::RenderWindow *window;
 	AssetManager *manager;
 	sf::Vector2f tileSize;

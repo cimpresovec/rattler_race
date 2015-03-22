@@ -57,6 +57,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     	background_music.setVolume(10);
     	background_music.play();
     }
+
+    eventMove = false;
 }
 
 LevelScene::~LevelScene()
@@ -121,10 +123,7 @@ void LevelScene::handleInput()
 			{
 				if (snake->getDirection() != "up") {
 					snake->setDirection("up");
-					speed = 0;
-
-					if (snake->moveSnake() == 0)
-						isGameOver = true;
+                    eventMove = true;
 				}
 			}
 
@@ -132,9 +131,7 @@ void LevelScene::handleInput()
 			{
 				if (snake->getDirection() != "left") {
 					snake->setDirection("left");
-					speed = 0;
-					if (snake->moveSnake() == 0)
-						isGameOver = true;
+                    eventMove = true;
 				}
 			}
 
@@ -142,9 +139,7 @@ void LevelScene::handleInput()
 			{
 				if (snake->getDirection() != "down") {
 					snake->setDirection("down");
-					speed = 0;
-					if (snake->moveSnake() == 0)
-						isGameOver = true;
+                    eventMove = true;
 				}
 			}
 
@@ -152,9 +147,7 @@ void LevelScene::handleInput()
 			{
 				if (snake->getDirection() != "right") {
 					snake->setDirection("right");
-					speed = 0;
-					if (snake->moveSnake() == 0)
-						isGameOver = true;
+                    eventMove = true;
 				}
 			}
 		}
@@ -180,9 +173,17 @@ void LevelScene::handleLogic()
 
     if (isGameOver) return;
 
-    speed++;
+    //If user pressed a key we move
+    if (eventMove)
+    {
+        eventMove = false;
+        snake->moveSnake();
+        speed = -1;
+    }
 
-    if (speed == snakeSpeed)
+    //Normal snake movement
+    speed++;
+    if (speed == (int)snakeSpeed)
     {
         snake->moveSnake();
 		speed = 0;
@@ -294,6 +295,9 @@ void LevelScene::handleRender()
         it->handleRender(window);
     }
 
+    //Draw snake
+    snake->drawSnake();
+
     if (isGameOver)
 	{
 		static bool gameOverSetup = false;	
@@ -312,16 +316,12 @@ void LevelScene::handleRender()
 			gameOverSetup = true;
 		}
 
-        snake->drawSnake();
 		window->draw(underlay);
         window->draw(gameOverText);
 		window->display();
 
 		return;
 	}
-
-	// Snake
-	snake->drawSnake();
 
     window->display();
 }

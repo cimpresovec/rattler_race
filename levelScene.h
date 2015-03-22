@@ -63,6 +63,8 @@ private:
     bool isGameOver;
     void showGameOverMenu();
 	void saveTheHighestCompletedLvl(int lvl);
+
+    bool eventMove;
 };
 
 #endif // LEVELSCENE_H
