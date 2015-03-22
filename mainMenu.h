@@ -32,10 +32,15 @@ private:
 
 	int avalibleLvls;
 
+	int numberOfBalls;
+
 	sf::RectangleShape background;
 
 	sf::RectangleShape lvlBtn[NUMBER_OF_LVLS];
 	sf::RectangleShape lvlEditorBtn;
+	sf::RectangleShape scoreBtn;
+	sf::RectangleShape ballsBtn;
+	sf::Text ballsText;
 	sf::Text lvlText;
 
 };
