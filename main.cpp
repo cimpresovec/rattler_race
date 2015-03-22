@@ -7,7 +7,7 @@
 
 int main()
 {
-    sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(561, 661), "Rattler Race");
+    sf::RenderWindow *window = new sf::RenderWindow(sf::VideoMode(561, 661), "Rattler Race", sf::Style::Titlebar);
     sf::Event *event = new sf::Event();
 
     //Asset manager
