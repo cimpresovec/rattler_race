@@ -2,7 +2,7 @@
 #define LEVELSCENE_H
 
 #define SPEED 8
-#define PICKUPS 10
+#define PICKUPS 1
 
 #include "gameScene.h"
 #include "assetManager.h"

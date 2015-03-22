@@ -17,7 +17,7 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	if (lvlFile.is_open()) {
 		std::stringstream ss;
 		ss << lvlFile.rdbuf();
-		avalibleLvls = std::stoi(ss.str()) + 1;
+		avalibleLvls = atoi(ss.str().c_str()) + 1;
 	}
 	else
 		avalibleLvls = 1;

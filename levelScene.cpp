@@ -220,7 +220,7 @@ void LevelScene::handleRender()
 			gameOverSetup = true;
 		}
 
-        snake->drawSnake();
+        //snake->drawSnake();
 		window->draw(underlay);
         window->draw(gameOverText);
 		window->display();
@@ -245,9 +245,9 @@ void LevelScene::resetLevel()
 {
 	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
 	delete snake;
-    snake = new Snake(window, asset_manager, scene);
 	clearLevel();
 	placePickups(PICKUPS);
+	snake = new Snake(window, asset_manager, scene);
 	start = clock();
 }
 
@@ -310,17 +310,28 @@ void LevelScene::placePickups(int count)
 }
 
 void LevelScene::saveTheHighestCompletedLvl(int lvl) {
-	std::ofstream lvlFile ("levels/lvlSave.lvl");
+	std::ifstream lvlFileI("levels/lvlSave.lvl");
 	std::stringstream ss;
-	std::string lvlString = "";
+	ss << lvlFileI.rdbuf();
+	std::string lvlString = ss.str();
+	lvlFileI.close();
 
-	ss << lvlFile.rdbuf();
-	lvlString = ss.str();
-
-	if (lvlString < std::to_string(lvl) || lvlString == "") {
-		if (lvlFile.is_open()) {
-			lvlFile << lvl;
-			lvlFile.close();
+	if (lvlString != ""){
+		if (std::stoi(lvlString) < lvl) {
+			std::ofstream lvlFileO("levels/lvlSave.lvl");
+			if (lvlFileO.is_open()) {
+				lvlFileO << lvl;
+				lvlFileO.close();
+			}
+			else
+				std::cout << "Unable to open file" << std::endl;
+		}
+	}
+	else {
+		std::ofstream lvlFileO("levels/lvlSave.lvl");
+		if (lvlFileO.is_open()) {
+			lvlFileO << 1;
+			lvlFileO.close();
 		}
 		else
 			std::cout << "Unable to open file" << std::endl;
