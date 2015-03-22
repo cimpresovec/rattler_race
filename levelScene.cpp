@@ -164,7 +164,7 @@ void LevelScene::spawnBalls()
     balls.clear();
 
     //TODO set this to settings
-    int n_balls = 0;
+    int n_balls = 2;
 
     while (n_balls > 0)
     {
