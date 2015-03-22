@@ -34,6 +34,9 @@ private:
 
 	int numberOfBalls;
 
+	//Sounds related
+    sf::Music background_music;
+
 	sf::RectangleShape background;
 
 	sf::RectangleShape lvlBtn[NUMBER_OF_LVLS];

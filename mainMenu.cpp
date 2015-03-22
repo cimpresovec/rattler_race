@@ -85,6 +85,14 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	title[1].setColor(sf::Color(237, 218, 196, 255));
 	title[1].setPosition(20, rightBotY + buttonSize - 38);
 	title[1].scale(1.3, 1.3);
+
+	//Background music
+    if (background_music.openFromFile("assets/sounds/menu_background.wav"))
+    {
+    	background_music.setLoop(true);
+    	background_music.setVolume(10);
+    	background_music.play();
+    }
 }
 
 MainMenu::~MainMenu()
