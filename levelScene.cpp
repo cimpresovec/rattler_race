@@ -231,6 +231,16 @@ void LevelScene::handleLogic()
         this->loadLevel(level);
         this->restartTimer();
         snake = new Snake(window, asset_manager, scene);
+
+        static sf::SoundBuffer buffer;
+    	static sf::Sound sound;
+    	if (!buffer.getSampleCount())
+    	{
+    		buffer.loadFromFile("assets/sounds/next_level.wav");
+    		sound.setBuffer(buffer);
+    	}
+
+    	sound.play();
     }
 }
 

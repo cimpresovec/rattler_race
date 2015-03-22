@@ -35,6 +35,9 @@ private:
     unsigned char level_tiles[kLEVEL_SIDE_DIMENSION][kLEVEL_SIDE_DIMENSION];
     LevelEditorTool tool;
 
+    //Sounds related
+    sf::Music background_music;
+
 public:
     LevelEditorScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager);
     virtual ~LevelEditorScene();

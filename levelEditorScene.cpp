@@ -23,6 +23,14 @@ LevelEditorScene::LevelEditorScene(sf::RenderWindow *window, sf::Event *event, A
         this->level_tiles[kLEVEL_SIDE_DIMENSION - 1][i] = kLevelEditorToolWallPlacer;
         this->level_tiles[i][kLEVEL_SIDE_DIMENSION - 1] = kLevelEditorToolWallPlacer;
     }
+
+    //Background music
+    if (background_music.openFromFile("assets/sounds/editor_background.wav"))
+    {
+        background_music.setLoop(true);
+        background_music.setVolume(10);
+        background_music.play();
+    }
 }
 
 LevelEditorScene::~LevelEditorScene()
