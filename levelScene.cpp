@@ -88,7 +88,9 @@ void LevelScene::timerHandler()
     if (remainingTime <= 0)
         isGameOver = true;
     else if (remainingTime <= 5000)
-        timer.setFillColor(sf::Color(183, 68, 64));
+        timer.setFillColor(sf::Color(255, 0, 0));
+    else if (remainingTime <= 10000)
+        timer.setFillColor(sf::Color(255, 140, 20));
 }
 
 void LevelScene::handleInput()
