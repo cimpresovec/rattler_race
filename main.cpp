@@ -17,6 +17,7 @@ int main()
 	asset_manager->loadTexture("assets/snake.png");
 	asset_manager->loadTexture("assets/menu2.png");
 	asset_manager->loadTexture("assets/background.png");
+    asset_manager->loadTexture("assets/ball.png");
 
     window->setFramerateLimit(60);
 

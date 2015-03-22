@@ -64,6 +64,7 @@ private:
 	bool animation;
     void showGameOverMenu();
 	void saveTheHighestCompletedLvl(int lvl);
+    void spawnBalls();
 
     bool eventMove;
 };

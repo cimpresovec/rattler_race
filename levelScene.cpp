@@ -48,7 +48,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     initTimer();
 
     //Balls
-    balls.push_back(Ball(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/tiles1-5.png")));
+    spawnBalls();
 
     //Background music
     if (background_music.openFromFile("assets/sounds/background.wav"))
@@ -155,6 +155,33 @@ void LevelScene::handleInput()
     }
 }
 
+//Clear balls and spawn new ones
+void LevelScene::spawnBalls()
+{
+    balls.clear();
+
+    //TODO set this to settings
+    int n_balls = 2;
+
+    while (n_balls > 0)
+    {
+        //Random location untill we are on floor tile
+        while (true)
+        {
+            int rand_x = rand() % WIDTH;
+            int rand_y = rand() % HEIGHT;
+
+            if (scene[rand_x][rand_y] == 1)
+            {
+                balls.push_back(Ball(rand_x, rand_y, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/ball.png")));
+                break;
+            }
+        }
+
+        --n_balls;
+    }
+}
+
 void LevelScene::handleLogic()
 {
     if (isGameOver)
@@ -167,7 +194,7 @@ void LevelScene::handleLogic()
     {
         for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
         {
-            it->handleLogic(scene, *snake);
+            it->handleLogic(scene);
         }
         snake->has_moved = false;
     }
@@ -295,6 +322,16 @@ void LevelScene::handleRender()
 				tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
 				window->draw(tile);
 				break;
+            case -1:
+                tile.setTextureRect(sf::Rect<int>(64, 0, 64, 64));
+                tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+                window->draw(tile);
+                break;
+            case -2:
+                tile.setTextureRect(sf::Rect<int>(64, 0, 64, 64));
+                tile.setPosition(tile.getSize().x * i, tile.getSize().y * j + TOP_MARGIN);
+                window->draw(tile);
+                break;
 			default:
 				break;
 			}
@@ -388,6 +425,9 @@ void LevelScene::resetLevel()
 	placePickups(PICKUPS);
 	this->score = 0;
 
+    //Reset balls
+    spawnBalls();
+
     //New snake
     snake = new Snake(window, asset_manager, scene);
 
@@ -428,10 +468,15 @@ void LevelScene::loadLevel(std::string level_name)
 void LevelScene::clearLevel()
 {
 	for (int i = 0; i < WIDTH; ++i)
-		for (int j = 0; j < HEIGHT; ++j)
-			if (this->scene[i][j] == 2)
+    {
+        for (int j = 0; j < HEIGHT; ++j)
+        {
+            if (this->scene[i][j] == 2 || this->scene[i][j] == -1 || this->scene[i][j] == -2)
+            {
 				this->scene[i][j] = 1;
-
+            }
+        }
+    }
     this->scene[(WIDTH-1)/2][0] = 0;
 }
 

@@ -14,7 +14,7 @@ private:
 public:
     Ball(const int x, const int y, const int win_x, const int win_y, sf::Texture *tex);
 
-    void handleLogic(int scene[][HEIGHT], const Snake &snake);
+    void handleLogic(int scene[][HEIGHT]);
     void handleRender(sf::RenderWindow *window);
 };
 
