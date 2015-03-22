@@ -348,7 +348,6 @@ void LevelScene::handleRender()
 	{
 		if (animation) {
 			animation = false;
-			snake->remoaveHead();
 			int tmp = 1;
 			int zastavica = false;
 			for (int x = 0; x < 4; x++) {
