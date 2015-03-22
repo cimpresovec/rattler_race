@@ -57,9 +57,9 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	ballsBtn.setPosition(rightBotX - buttonSize*2 - (spaceBetween/2)*2, rightBotY);
 
 	// Ball text
-	ballsText.setColor(sf::Color(242, 241, 239, 255));
+	ballsText.setColor(sf::Color(237, 218, 196, 255));
 	ballsText.setFont(*asset_manager->getFont());
-	ballsText.setPosition(ballsBtn.getPosition().x + buttonSize/2 - 8, ballsBtn.getPosition().y + buttonSize / 3 -1);
+	ballsText.setPosition(ballsBtn.getPosition().x + buttonSize/2 - 8.5, ballsBtn.getPosition().y + buttonSize / 3 - 0.5);
 	ballsText.setString(std::to_string(numberOfBalls));
 
 	// Lvl button and text
@@ -70,7 +70,7 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 		lvlBtn[i].setTextureRect(sf::Rect<int>(256, 768, 256, 256));
 	}
 
-	lvlText.setColor(sf::Color(242, 241, 239, 255));
+	lvlText.setColor(sf::Color(237, 218, 196, 255));
 	lvlText.setFont(*asset_manager->getFont());
 
 	// Title
@@ -142,7 +142,7 @@ void MainMenu::handleInput()
 				next_scene = level;
 			}
 
-			lvlBtn[i].setFillColor(sf::Color(29, 29, 26, 255));
+			lvlBtn[i].setFillColor(sf::Color(29, 29, 26, 230));
 		}
 		else
 		{
