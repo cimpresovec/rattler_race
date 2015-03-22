@@ -131,7 +131,7 @@ void LevelEditorScene::handleRender()
         selectedToolText.setPosition(10, 40);
 
         tile.setSize(this->tile_size);
-        tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
+        tile.setTexture(asset_manager->getTexture("assets/tiles16-20.png"));
 
         setup = true;
     }
