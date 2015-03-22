@@ -42,6 +42,7 @@ private:
 	sf::RectangleShape ballsBtn;
 	sf::Text ballsText;
 	sf::Text lvlText;
+	sf::Text title[2];
 
 };
 

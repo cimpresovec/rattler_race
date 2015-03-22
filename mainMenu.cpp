@@ -72,6 +72,19 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 
 	lvlText.setColor(sf::Color(242, 241, 239, 255));
 	lvlText.setFont(*asset_manager->getFont());
+
+	// Title
+	title[0].setFont(*asset_manager->getFont());
+	title[0].setString("Rattler");
+	title[0].setColor(sf::Color(239, 180, 91, 255));
+	title[0].setPosition(10, rightBotY);
+	title[0].scale(1.5, 1.5);
+
+	title[1].setFont(*asset_manager->getFont());
+	title[1].setString("Race");
+	title[1].setColor(sf::Color(237, 218, 196, 255));
+	title[1].setPosition(20, rightBotY + buttonSize - 38);
+	title[1].scale(1.3, 1.3);
 }
 
 MainMenu::~MainMenu()
@@ -219,6 +232,10 @@ void MainMenu::handleRender()
 	// Ball button
 	window->draw(ballsBtn);
 	window->draw(ballsText);
+
+	// Draw tittle
+	window->draw(title[0]);
+	window->draw(title[1]);
 
     window->display();
 }
