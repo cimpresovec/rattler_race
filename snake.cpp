@@ -243,3 +243,7 @@ int Snake::getSnakeTileY(int index)
 {
     return (int)snake[index].position.y;
 }
+
+void Snake::remoaveHead() {
+	snake.erase(snake.begin());
+}

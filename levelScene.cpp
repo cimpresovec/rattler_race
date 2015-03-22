@@ -15,6 +15,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	speed = 0;
 	this->score = 0;
 	this->difficultySetting = kLevelDifficultySettingMedium;
+	this->animation = true;
 
     this->isGameOver = false;
 
@@ -114,6 +115,7 @@ void LevelScene::handleInput()
             else if (event->key.code == sf::Keyboard::R && isGameOver)
             {
                 isGameOver = false;
+				animation = true;
             	resetLevel();
             }
         }
@@ -305,53 +307,73 @@ void LevelScene::handleRender()
         it->handleRender(window);
     }
 
-    //Draw snake
-    snake->drawSnake();
-
     if (isGameOver)
 	{
-		static bool gameOverSetup = false;	
-		static sf::RectangleShape underlay;
-		static sf::Text gameOverText;
-
-		if (!gameOverSetup)
-		{
-			gameOverText.setFont(*asset_manager->getFont());
-        	gameOverText.setString("GAME OVER\n  R to restart");
-        	gameOverText.setPosition(190, 240);
-
-        	underlay.setPosition(135, 200);
-        	underlay.setSize(sf::Vector2f(300, 150));
-        	underlay.setFillColor(sf::Color(0, 0, 0, 255));
-			gameOverSetup = true;
-		}
-
-		window->draw(underlay);
-        window->draw(gameOverText);
-
-		int tmp = 1;
-		for (int x = 0; x < 2; x++) {
-			if (x % 2 == 0)
-				tmp = 3;
-			else
-				tmp = -3;
-
-			for (int i = 0; i < HEIGHT; i++){
-				for (int j = 0; j < WIDTH; j++) {
-					switch (scene[i][j]) {
+		if (animation) {
+			animation = false;
+			snake->remoaveHead();
+			int tmp = 1;
+			int zastavica = false;
+			for (int x = 0; x < 4; x++) {
+				switch (x % 2) {
 					case 0:
-						tile.setPosition(tile.getSize().x * i + tmp, tile.getSize().y * j + TOP_MARGIN);
-						window->draw(tile);
+						if (zastavica){
+							tmp = -15;
+							zastavica = false;
+						}
+						else {
+							tmp = 15;
+							zastavica = true;
+						}
 						break;
 					default:
+						tmp = 0;
 						break;
+				}
+
+				for (int i = 0; i < HEIGHT; i++){
+					for (int j = 0; j < WIDTH; j++) {
+						switch (scene[i][j]) {
+						case 0:
+							tile.setPosition(tile.getSize().x * i + tmp, tile.getSize().y * j + tmp + TOP_MARGIN);
+							window->draw(tile);
+							break;
+						default:
+							break;
+						}
 					}
 				}
+				window->display();
 			}
+		}
+		else {
+			static bool gameOverSetup = false;
+			static sf::RectangleShape underlay;
+			static sf::Text gameOverText;
+
+			if (!gameOverSetup)
+			{
+				gameOverText.setFont(*asset_manager->getFont());
+				gameOverText.setString("GAME OVER\n  R to restart");
+				gameOverText.setPosition(190, 240);
+
+				underlay.setPosition(135, 200);
+				underlay.setSize(sf::Vector2f(300, 150));
+				underlay.setFillColor(sf::Color(0, 0, 0, 180));
+				gameOverSetup = true;
+			}
+
+			snake->drawSnake();
+			window->draw(underlay);
+			window->draw(gameOverText);	
 			window->display();
 		}
 
 		return;
+	}
+	else {
+		//Draw snake
+		snake->drawSnake();
 	}
 
     window->display();

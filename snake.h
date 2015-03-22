@@ -24,6 +24,7 @@ public:
     bool snakeSelfCollision(int x, int y);
     int getSnakeTileX(int index);
     int getSnakeTileY(int index);
+	void remoaveHead();
 
     bool has_moved;
 

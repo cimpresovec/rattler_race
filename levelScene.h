@@ -61,6 +61,7 @@ private:
     sf::Music background_music;
 
     bool isGameOver;
+	bool animation;
     void showGameOverMenu();
 	void saveTheHighestCompletedLvl(int lvl);
 
