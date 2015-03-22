@@ -76,7 +76,7 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	// Title
 	title[0].setFont(*asset_manager->getFont());
 	title[0].setString("Rattler");
-	title[0].setColor(sf::Color(239, 180, 91, 255));
+	title[0].setColor(sf::Color(202, 106, 46, 255));
 	title[0].setPosition(10, rightBotY);
 	title[0].scale(1.5, 1.5);
 
