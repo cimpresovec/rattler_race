@@ -16,7 +16,6 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	this->score = 0;
 	this->difficultySetting = kLevelDifficultySettingMedium;
 	this->animation = true;
-
     this->isGameOver = false;
 
 	// Set tile colors
@@ -240,6 +239,7 @@ void LevelScene::handleLogic()
     	{
     		buffer.loadFromFile("assets/sounds/next_level.wav");
     		sound.setBuffer(buffer);
+    		sound.setVolume(50);
     	}
 
     	sound.play();

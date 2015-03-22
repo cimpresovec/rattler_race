@@ -11,6 +11,7 @@ LevelEditorScene::LevelEditorScene(sf::RenderWindow *window, sf::Event *event, A
     this->window = window;
     this->event = event;
     next_scene = none;
+    this->shouldClear = false;
 
     this->tool = kLevelEditorToolWallPlacer;
     this->tile_size = sf::Vector2f(window->getSize().x / (double)kLEVEL_SIDE_DIMENSION, (window->getSize().y - TOP_MARGIN) / (double)kLEVEL_SIDE_DIMENSION);
@@ -65,6 +66,9 @@ void LevelEditorScene::handleInput()
             case sf::Keyboard::N:
                 tool = kLevelEditorToolSpecialPillPlacer;
                 break;
+            case sf::Keyboard::R:
+                this->shouldClear = true;
+                break;
             case sf::Keyboard::S:
                 this->saveLevel("new_level.lvl");
                 break;
@@ -93,7 +97,18 @@ void LevelEditorScene::handleInput()
 
 void LevelEditorScene::handleLogic()
 {
-
+    if (shouldClear)
+    {
+        memset(this->level_tiles, kLevelEditorToolEraser, sizeof(unsigned char) * kLEVEL_SIDE_DIMENSION * kLEVEL_SIDE_DIMENSION);
+        for (int i = 0; i < kLEVEL_SIDE_DIMENSION; ++i)
+        {
+            this->level_tiles[0][i] = kLevelEditorToolWallPlacer;
+            this->level_tiles[i][0] = kLevelEditorToolWallPlacer;
+            this->level_tiles[kLEVEL_SIDE_DIMENSION - 1][i] = kLevelEditorToolWallPlacer;
+            this->level_tiles[i][kLEVEL_SIDE_DIMENSION - 1] = kLevelEditorToolWallPlacer;
+        }
+        shouldClear = false;
+    }
 }
 
 void LevelEditorScene::handleRender()

@@ -34,6 +34,7 @@ private:
     sf::Vector2f tile_size;
     unsigned char level_tiles[kLEVEL_SIDE_DIMENSION][kLEVEL_SIDE_DIMENSION];
     LevelEditorTool tool;
+    bool shouldClear;
 
     //Sounds related
     sf::Music background_music;
