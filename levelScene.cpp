@@ -50,8 +50,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     //Balls
     spawnBalls();
 
-    //Enemy snakes
-    enemy_snakes.push_back(EnemySnake(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/snake.png")));
+    //Snakes
+    spawnSnakes();
 
     //Background music
     if (background_music.openFromFile("assets/sounds/background.wav"))
@@ -164,7 +164,7 @@ void LevelScene::spawnBalls()
     balls.clear();
 
     //TODO set this to settings
-    int n_balls = 2;
+    int n_balls = 0;
 
     while (n_balls > 0)
     {
@@ -185,6 +185,33 @@ void LevelScene::spawnBalls()
     }
 }
 
+//Clear snakes and create new ones
+void LevelScene::spawnSnakes()
+{
+    enemy_snakes.clear();
+
+    //TODO set this to settings
+    int n_snakes = 2;
+
+    while (n_snakes > 0)
+    {
+        //Random location untill we are on floor tile
+        while (true)
+        {
+            int rand_x = rand() % WIDTH;
+            int rand_y = rand() % HEIGHT;
+
+            if (scene[rand_x][rand_y] == 1)
+            {
+                enemy_snakes.push_back(EnemySnake(rand_x, rand_y, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/snake.png")));
+                break;
+            }
+        }
+
+        --n_snakes;
+    }
+}
+
 void LevelScene::handleLogic()
 {
     if (isGameOver)
@@ -202,6 +229,11 @@ void LevelScene::handleLogic()
         for (std::vector<EnemySnake>::iterator it = enemy_snakes.begin(); it != enemy_snakes.end(); ++it)
         {
             it->handleLogic(scene);
+            if (it->ate_apple)
+            {
+                it->ate_apple = false;
+                snake->eatPickup();
+            }
         }
         snake->has_moved = false;
     }
@@ -266,6 +298,8 @@ void LevelScene::handleLogic()
         this->loadLevel(level);
         this->restartTimer();
         snake = new Snake(window, asset_manager, scene);
+        spawnBalls();
+        spawnSnakes();
 
         static sf::SoundBuffer buffer;
     	static sf::Sound sound;
@@ -438,6 +472,7 @@ void LevelScene::resetLevel()
 
     //Reset balls
     spawnBalls();
+    spawnSnakes();
 
     //New snake
     snake = new Snake(window, asset_manager, scene);

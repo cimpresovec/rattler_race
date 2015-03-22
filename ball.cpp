@@ -24,7 +24,7 @@ void Ball::handleLogic(int scene[][HEIGHT])
     position.x += speed.x;
 
     //Check next collision
-    if (scene[position.x][position.y] == 0 || scene[position.x][position.y] == -1)
+    if (scene[position.x][position.y] == 0 || scene[position.x][position.y] == -1 || scene[position.x][position.y] == -2)
     {
         position.x -= speed.x;
         speed.x = -speed.x;
@@ -33,7 +33,7 @@ void Ball::handleLogic(int scene[][HEIGHT])
     position.y += speed.y;
 
     //Check collision
-    if (scene[position.x][position.y] == 0 || scene[position.x][position.y] == -1)
+    if (scene[position.x][position.y] == 0 || scene[position.x][position.y] == -1 || scene[position.x][position.y] == -2)
     {
         position.y -= speed.y;
         speed.y = -speed.y;

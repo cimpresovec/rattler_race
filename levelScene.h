@@ -67,6 +67,7 @@ private:
     void showGameOverMenu();
 	void saveTheHighestCompletedLvl(int lvl);
     void spawnBalls();
+    void spawnSnakes();
 
     bool eventMove;
 };

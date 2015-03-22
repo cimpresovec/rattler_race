@@ -156,6 +156,14 @@ void Snake::drawSnake()
 	}
 }
 
+void Snake::eatPickup()
+{
+    pickups--;
+
+    if (pickups == 0)
+        scene[(WIDTH - 1) / 2][0] = 1;
+}
+
 int Snake::detectCollision()
 {
     currentTilePosition = scene[getSnakeTileX(0)][getSnakeTileY(0)];
@@ -167,17 +175,15 @@ int Snake::detectCollision()
     }
     else if (snakeSelfCollision(getSnakeTileX(0), getSnakeTileY(0))) //self collision
     {
-        std::cout << currentTilePosition << 'SELF \n';
+        std::cout << currentTilePosition << "SELF \n";
         return 0;
     }
     else if (currentTilePosition >= 2) //eat item
     {
         this->addPart();
         scene[getSnakeTileX(0)][getSnakeTileY(0)] = -1;
-        pickups--;
 
-        if (pickups == 0)
-            scene[(WIDTH - 1) / 2][0] = 1;
+        eatPickup();
 
         return 1;
     }

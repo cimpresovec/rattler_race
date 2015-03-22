@@ -28,6 +28,8 @@ public:
 
     bool has_moved;
 
+    void eatPickup();
+
     struct SnakeTile
     {
         SnakeTile() {}
