@@ -216,9 +216,9 @@ void Snake::start()
     SnakeTile head;
     head.rect.setSize(tileSize);
     head.position.x = (int)WIDTH / (int)2;
-    head.position.y = HEIGHT - 3;
+    head.position.y = HEIGHT - 2;
 	head.lastPosition.x = (int)WIDTH / (int)2;
-	head.lastPosition.y = HEIGHT - 2;
+	head.lastPosition.y = HEIGHT-1;
 	head.rect.setTexture(manager->getTexture("assets/snake.png"));
 	head.rect.setTextureRect(sf::Rect<int>(0,0,64,64));
     head.rect.setOrigin(tileSize.x / 2.0, tileSize.y / 2.0);
