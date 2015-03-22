@@ -328,7 +328,28 @@ void LevelScene::handleRender()
 
 		window->draw(underlay);
         window->draw(gameOverText);
-		window->display();
+
+		int tmp = 1;
+		for (int x = 0; x < 2; x++) {
+			if (x % 2 == 0)
+				tmp = 3;
+			else
+				tmp = -3;
+
+			for (int i = 0; i < HEIGHT; i++){
+				for (int j = 0; j < WIDTH; j++) {
+					switch (scene[i][j]) {
+					case 0:
+						tile.setPosition(tile.getSize().x * i + tmp, tile.getSize().y * j + TOP_MARGIN);
+						window->draw(tile);
+						break;
+					default:
+						break;
+					}
+				}
+			}
+			window->display();
+		}
 
 		return;
 	}
