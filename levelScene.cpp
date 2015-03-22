@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-const int kLevelPlayTime = 30;
+#define LEVEL_TIME 30000
 
 LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager *manager)
 {
@@ -44,12 +44,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 
     snake = new Snake(window, asset_manager, scene);
 
-	// Timer
-    timer_size = window->getSize().x - 2 * tile.getSize().x;
-	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
-	timer.setFillColor(sf::Color(68, 183, 64, 255));
-	timer.setPosition(sf::Vector2f(tile.getSize().x, TOP_MARGIN - 2 * tile.getSize().y));
-	start = clock();
+    //Timer
+    initTimer();
 
     //Balls
     balls.push_back(Ball(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/tiles1-5.png")));
@@ -67,16 +63,34 @@ LevelScene::~LevelScene()
 {
 	delete snake;
 }
+
+void LevelScene::initTimer()
+{
+    timer_size = window->getSize().x - 2 * tile.getSize().x;
+    timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
+    timer.setFillColor(sf::Color(68, 183, 64));
+    timer.setPosition(sf::Vector2f(tile.getSize().x, TOP_MARGIN - 2 * tile.getSize().y));
+    remainingTime = LEVEL_TIME;
+    clock.restart();
+}
+
+void LevelScene::restartTimer()
+{
+    timer.setFillColor(sf::Color(68, 183, 64));
+    clock.restart();
+}
+
 void LevelScene::timerHandler()
 {
-	time_t time_to_solve;
+    remainingTime = LEVEL_TIME - clock.getElapsedTime().asMilliseconds();
+    timer.setSize(sf::Vector2f(timer_size * (double)remainingTime / (double)LEVEL_TIME, tile.getSize().y));
 
-	time_to_solve = kLevelPlayTime - (int)((clock() - start) / CLOCKS_PER_SEC);
-	//zmanjsaj velikost
-	timer.setSize(sf::Vector2f(timer_size * (double)time_to_solve / (double)kLevelPlayTime, tile.getSize().y));
-
-	if (time_to_solve <= 0)
+    if (remainingTime <= 0)
         isGameOver = true;
+    else if (remainingTime <= 5000)
+        timer.setFillColor(sf::Color(255, 0, 0));
+    else if (remainingTime <= 10000)
+        timer.setFillColor(sf::Color(255, 140, 20));
 }
 
 void LevelScene::handleInput()
@@ -149,7 +163,10 @@ void LevelScene::handleInput()
 
 void LevelScene::handleLogic()
 {
-	timerHandler();
+    if (isGameOver)
+        return;
+    else
+        timerHandler();
 
     //Ball movement
     if (snake->has_moved)
@@ -202,10 +219,7 @@ void LevelScene::handleLogic()
     }
     if (collisionResult == 2) //level completed
     {
-        // GO TO NEXT LEVEL
         delete snake;
-        start = clock();
-        timer_size = window->getSize().x - 2 * tile.getSize().x;
 
 		// For menu lvl lock
 		saveTheHighestCompletedLvl(asset_manager->selected_level);
@@ -214,6 +228,7 @@ void LevelScene::handleLogic()
 
         std::string level = "level_" + std::to_string(asset_manager->selected_level) + ".lvl";
         this->loadLevel(level);
+        this->restartTimer();
         snake = new Snake(window, asset_manager, scene);
     }
 }
@@ -241,7 +256,6 @@ void LevelScene::handleRender()
 
     window->draw(levelText);
     window->draw(scoreText);
-
 	window->draw(timer);
 
 	//Render level tiles
@@ -298,7 +312,7 @@ void LevelScene::handleRender()
 			gameOverSetup = true;
 		}
 
-        //snake->drawSnake();
+        snake->drawSnake();
 		window->draw(underlay);
         window->draw(gameOverText);
 		window->display();
@@ -314,13 +328,17 @@ void LevelScene::handleRender()
 
 void LevelScene::resetLevel()
 {
-	timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
 	delete snake;
+
+    //Reset level and score
 	clearLevel();
 	placePickups(PICKUPS);
 	this->score = 0;
-	snake = new Snake(window, asset_manager, scene);
-	start = clock();
+
+    //New snake
+    snake = new Snake(window, asset_manager, scene);
+
+    restartTimer();
 }
 
 void LevelScene::loadLevel(std::string level_name)

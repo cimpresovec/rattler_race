@@ -22,6 +22,8 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	else
 		avalibleLvls = 1;
 
+	numberOfBalls = 0;
+
 
 	// Dvet gumbov pa 1/10 gumba razmaka
 	buttonSize = (double)(window->getSize().x / (BUTTONS_IN_ROW + 2));
@@ -34,21 +36,55 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 
 	// Menu background
 	background.setSize((sf::Vector2f)window->getSize());
-	background.setFillColor(sf::Color(242, 241, 239, 255));
+	background.setTexture(asset_manager->getTexture("assets/background.png"));
 
 	// LvlEditor button
 	lvlEditorBtn.setSize(sf::Vector2f(buttonSize, buttonSize));
-	lvlEditorBtn.setFillColor(sf::Color(103, 65, 114, 255));
+	lvlEditorBtn.setTexture(asset_manager->getTexture("assets/menu2.png"));
+	lvlEditorBtn.setTextureRect(sf::Rect<int>(0, 256, 256, 256));
 	lvlEditorBtn.setPosition(rightBotX, rightBotY);
+
+	// Score button
+	scoreBtn.setSize(sf::Vector2f(buttonSize, buttonSize));
+	scoreBtn.setTexture(asset_manager->getTexture("assets/menu2.png"));
+	scoreBtn.setTextureRect(sf::Rect<int>(0, 0, 256, 256));
+	scoreBtn.setPosition(rightBotX - buttonSize - (spaceBetween/2), rightBotY);
+
+	// Ball button
+	ballsBtn.setSize(sf::Vector2f(buttonSize, buttonSize));
+	ballsBtn.setTexture(asset_manager->getTexture("assets/menu2.png"));
+	ballsBtn.setTextureRect(sf::Rect<int>(0, 512, 256, 256));
+	ballsBtn.setPosition(rightBotX - buttonSize*2 - (spaceBetween/2)*2, rightBotY);
+
+	// Ball text
+	ballsText.setColor(sf::Color(237, 218, 196, 255));
+	ballsText.setFont(*asset_manager->getFont());
+	ballsText.setPosition(ballsBtn.getPosition().x + buttonSize/2 - 8.5, ballsBtn.getPosition().y + buttonSize / 3 - 0.5);
+	ballsText.setString(std::to_string(numberOfBalls));
 
 	// Lvl button and text
 	for (int i = 0; i < NUMBER_OF_LVLS; i++){
 		lvlBtn[i].setSize(sf::Vector2f(buttonSize, buttonSize));
-		lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 255));
+		//lvlBtn[i].setFillColor(sf::Color(29, 29, 26, 180));
+		lvlBtn[i].setTexture(asset_manager->getTexture("assets/menu2.png"));
+		lvlBtn[i].setTextureRect(sf::Rect<int>(256, 768, 256, 256));
 	}
 
-	lvlText.setColor(sf::Color(242, 241, 239, 255));
+	lvlText.setColor(sf::Color(237, 218, 196, 255));
 	lvlText.setFont(*asset_manager->getFont());
+
+	// Title
+	title[0].setFont(*asset_manager->getFont());
+	title[0].setString("Rattler");
+	title[0].setColor(sf::Color(239, 180, 91, 255));
+	title[0].setPosition(10, rightBotY);
+	title[0].scale(1.5, 1.5);
+
+	title[1].setFont(*asset_manager->getFont());
+	title[1].setString("Race");
+	title[1].setColor(sf::Color(237, 218, 196, 255));
+	title[1].setPosition(20, rightBotY + buttonSize - 38);
+	title[1].scale(1.3, 1.3);
 }
 
 MainMenu::~MainMenu()
@@ -106,24 +142,53 @@ void MainMenu::handleInput()
 				next_scene = level;
 			}
 
-			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 200));
+			lvlBtn[i].setFillColor(sf::Color(29, 29, 26, 230));
 		}
 		else
 		{
-			lvlBtn[i].setFillColor(sf::Color(103, 65, 114, 255));
+			lvlBtn[i].setFillColor(sf::Color(29, 29, 26, 180));
 		}
 	}
 
 	// Lvl editor mouse detection
 	if (((mouseX > lvlEditorBtn.getPosition().x) && (mouseX < lvlEditorBtn.getPosition().x + buttonSize)) &&
 		((mouseY > lvlEditorBtn.getPosition().y) && (mouseY < lvlEditorBtn.getPosition().y + buttonSize))) {
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			next_scene = level_editor;
 		}
 
-		lvlEditorBtn.setFillColor(sf::Color(103, 65, 114, 200));
+		lvlEditorBtn.setTextureRect(sf::Rect<int>(256, 256, 256, 256));
 	} else {
-		lvlEditorBtn.setFillColor(sf::Color(103, 65, 114, 255));
+		lvlEditorBtn.setTextureRect(sf::Rect<int>(0, 256, 256, 256));
+	}
+
+	// Highscore mouse detection
+	if (((mouseX > scoreBtn.getPosition().x) && (mouseX < scoreBtn.getPosition().x + buttonSize)) &&
+		((mouseY > scoreBtn.getPosition().y) && (mouseY < scoreBtn.getPosition().y + buttonSize))) {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			
+		}
+
+		scoreBtn.setTextureRect(sf::Rect<int>(256, 0, 256, 256));
+	}
+	else {
+		scoreBtn.setTextureRect(sf::Rect<int>(0, 0, 256, 256));
+	}
+
+	// Balls mouse detection
+	if (((mouseX > ballsBtn.getPosition().x) && (mouseX < ballsBtn.getPosition().x + buttonSize)) &&
+		((mouseY > ballsBtn.getPosition().y) && (mouseY < ballsBtn.getPosition().y + buttonSize))) {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+		}
+
+		ballsBtn.setTextureRect(sf::Rect<int>(256, 512, 256, 256));
+	}
+	else {
+		ballsBtn.setTextureRect(sf::Rect<int>(0, 512, 256, 256));
 	}
 }
 
@@ -146,7 +211,8 @@ void MainMenu::handleRender()
 			j++;
 		lvlBtn[i].setPosition(spaceBetween * ((i%BUTTONS_IN_ROW) + 1) + buttonSize * (i%BUTTONS_IN_ROW), spaceBetween * (j + 1) + buttonSize * j);
 		if (i > avalibleLvls-1) {
-			lvlText.setString(" ??");
+			lvlText.setString("");
+			lvlBtn[i].setTextureRect(sf::Rect<int>(0, 768, 256, 256));
 		}
 		else if (i < 9)
 			lvlText.setString("0" + std::to_string(i + 1));
@@ -159,6 +225,17 @@ void MainMenu::handleRender()
 
 	// LvlEditor button
 	window->draw(lvlEditorBtn);
+
+	// Score button
+	window->draw(scoreBtn);
+
+	// Ball button
+	window->draw(ballsBtn);
+	window->draw(ballsText);
+
+	// Draw tittle
+	window->draw(title[0]);
+	window->draw(title[1]);
 
     window->display();
 }

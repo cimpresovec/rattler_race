@@ -15,6 +15,8 @@ int main()
     AssetManager *asset_manager = new AssetManager();
 	asset_manager->loadTexture("assets/tiles1-5.png"); 
 	asset_manager->loadTexture("assets/snake.png");
+	asset_manager->loadTexture("assets/menu2.png");
+	asset_manager->loadTexture("assets/background.png");
 
     window->setFramerateLimit(60);
 
