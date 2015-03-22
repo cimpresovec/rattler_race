@@ -30,17 +30,6 @@ LevelEditorScene::~LevelEditorScene()
 
 }
 
-inline bool exists_test0 (const std::string& name) {
-    std::ifstream f(name.c_str());
-    if (f.good()) {
-        f.close();
-        return true;
-    } else {
-        f.close();
-        return false;
-    }   
-}
-
 void LevelEditorScene::handleInput()
 {
     while (window->pollEvent(*event))
@@ -63,6 +52,9 @@ void LevelEditorScene::handleInput()
                 tool = kLevelEditorToolWallPlacer;
                 break;
             case sf::Keyboard::B:
+                tool = kLevelEditorToolPickupPlacer;
+                break;
+            case sf::Keyboard::N:
                 tool = kLevelEditorToolSpecialPillPlacer;
                 break;
             case sf::Keyboard::S:
@@ -130,8 +122,11 @@ void LevelEditorScene::handleRender()
     case kLevelEditorToolWallPlacer:
         str = "Wall placer";
         break;
+    case kLevelEditorToolPickupPlacer:
+        str = "Pickup placer";
+        break;
     case kLevelEditorToolSpecialPillPlacer:
-        str = "Bonus placer";
+        str = "Special placer";
         break;
     }
     selectedToolText.setString("Tool: " + str);

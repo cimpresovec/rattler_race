@@ -22,7 +22,8 @@ enum LevelEditorTool
 {
     kLevelEditorToolEraser = 1,
     kLevelEditorToolWallPlacer = 0,
-    kLevelEditorToolSpecialPillPlacer = 2
+    kLevelEditorToolPickupPlacer = 2,
+    kLevelEditorToolSpecialPillPlacer = 3
 };
 
 typedef enum LevelEditorTool LevelEditorTool;
