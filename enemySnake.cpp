@@ -94,7 +94,7 @@ void EnemySnake::handleLogic(int scene[][HEIGHT])
         }
         else
         {
-            for (unsigned int i = positions.size(); i > 0; --i)
+            for (unsigned int i = positions.size() - 1; i > 0; --i)
             {
                 positions[i] = positions[i-1];
             }
