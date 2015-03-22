@@ -50,6 +50,9 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     //Balls
     spawnBalls();
 
+    //Enemy snakes
+    enemy_snakes.push_back(EnemySnake(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/snake.png")));
+
     //Background music
     if (background_music.openFromFile("assets/sounds/background.wav"))
     {
@@ -189,10 +192,14 @@ void LevelScene::handleLogic()
     else
         timerHandler();
 
-    //Ball movement
+    //Ball and enemy snake movement
     if (snake->has_moved)
     {
         for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
+        {
+            it->handleLogic(scene);
+        }
+        for (std::vector<EnemySnake>::iterator it = enemy_snakes.begin(); it != enemy_snakes.end(); ++it)
         {
             it->handleLogic(scene);
         }
@@ -338,8 +345,12 @@ void LevelScene::handleRender()
 		}
     }
 
-    //Draw balls
+    //Draw balls and enemy snakes
     for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); ++it)
+    {
+        it->handleRender(window);
+    }
+    for (std::vector<EnemySnake>::iterator it = enemy_snakes.begin(); it != enemy_snakes.end(); ++it)
     {
         it->handleRender(window);
     }

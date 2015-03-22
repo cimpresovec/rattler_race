@@ -7,6 +7,7 @@
 #include "assetManager.h"
 #include "snake.h"
 #include "ball.h"
+#include "enemySnake.h"
 #include <string>
 #include <fstream>
 #include <ctime>
@@ -56,6 +57,7 @@ private:
     void restartTimer();
 
     std::vector<Ball> balls;
+    std::vector<EnemySnake> enemy_snakes;
 
     //Sounds related
     sf::Music background_music;

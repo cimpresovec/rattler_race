@@ -160,12 +160,16 @@ int Snake::detectCollision()
 {
     currentTilePosition = scene[getSnakeTileX(0)][getSnakeTileY(0)];
 
-    if (currentTilePosition == 0 || currentTilePosition == -2) //collision with wall
+    if ((currentTilePosition == 0) || (currentTilePosition == -2)) //collision with wall
     {
+        std::cout << currentTilePosition << '\n';
         return 0;
     }
     else if (snakeSelfCollision(getSnakeTileX(0), getSnakeTileY(0))) //self collision
+    {
+        std::cout << currentTilePosition << 'SELF \n';
         return 0;
+    }
     else if (currentTilePosition >= 2) //eat item
     {
         this->addPart();
