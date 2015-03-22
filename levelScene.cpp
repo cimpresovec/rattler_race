@@ -320,7 +320,11 @@ void LevelScene::saveTheHighestCompletedLvl(int lvl) {
 		if (std::stoi(lvlString) < lvl) {
 			std::ofstream lvlFileO("levels/lvlSave.lvl");
 			if (lvlFileO.is_open()) {
-				lvlFileO << lvl;
+				if (lvl == 30) {
+					lvlFileO << 29;
+				}
+				else
+					lvlFileO << lvl;
 				lvlFileO.close();
 			}
 			else
