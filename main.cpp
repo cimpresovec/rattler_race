@@ -16,6 +16,7 @@ int main()
 	asset_manager->loadTexture("assets/tiles1-5.png");
 	asset_manager->loadTexture("assets/tiles6-10.png");
 	asset_manager->loadTexture("assets/tiles11-15.png");
+	asset_manager->loadTexture("assets/tiles16-20.png");
 	asset_manager->loadTexture("assets/snake.png");
 	asset_manager->loadTexture("assets/menu2.png");
 	asset_manager->loadTexture("assets/background.png");
