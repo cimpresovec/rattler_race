@@ -13,6 +13,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     this->event = event;
     next_scene = none;
 	speed = 0;
+	this->score = 0;
+	this->difficultySetting = kLevelDifficultySettingEasy;
 
     this->isGameOver = false;
 
@@ -27,6 +29,19 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
+	switch (this->difficultySetting)
+	{
+	case kLevelDifficultySettingEasy:
+		this->snakeSpeed = 12;
+		break;
+	case kLevelDifficultySettingMedium:
+		this->snakeSpeed = 8;
+		break;
+	case kLevelDifficultySettingHard:
+		this->snakeSpeed = 4;
+		break;
+	}
+
     snake = new Snake(window, asset_manager, scene);
 
 	// Timer
@@ -38,6 +53,14 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 
     //Balls
     balls.push_back(Ball(2, 2, window->getSize().x, window->getSize().y, asset_manager->getTexture("assets/tiles1-5.png")));
+
+    //Background music
+    if (background_music.openFromFile("assets/sounds/background.wav"))
+    {
+    	background_music.setLoop(true);
+    	background_music.setVolume(10);
+    	background_music.play();
+    }
 }
 
 LevelScene::~LevelScene()
@@ -138,11 +161,39 @@ void LevelScene::handleLogic()
         snake->has_moved = false;
     }
 
-    if (snake->detectCollision() == 0) //collision
+    if (isGameOver)
+    	return;
+
+    const int collisionResult = snake->detectCollision();
+    if (collisionResult == 0) //collision
     {
         isGameOver = true;
+
+        static sf::SoundBuffer buffer;
+    	static sf::Sound sound;
+    	if (!buffer.getSampleCount())
+    	{
+    		buffer.loadFromFile("assets/sounds/game_over.wav");
+    		sound.setBuffer(buffer);
+    	}
+    	
+    	sound.play();
     }
-    if (snake->detectCollision() == 2) //level completed
+    else if (collisionResult == 1) //ate a pickup
+    {
+    	static sf::SoundBuffer buffer;
+    	static sf::Sound sound;
+    	if (!buffer.getSampleCount())
+    	{
+    		buffer.loadFromFile("assets/sounds/pickup.wav");
+    		sound.setBuffer(buffer);
+    	}
+
+    	sound.play();
+
+    	this->score += this->difficultySetting;
+    }
+    if (collisionResult == 2) //level completed
     {
         // GO TO NEXT LEVEL
         delete snake;
@@ -164,9 +215,29 @@ void LevelScene::handleRender()
 {
     window->clear();
 
+    //Draw level info
+    static sf::Text levelText;
+    static sf::Text scoreText;
+    static bool setup = false;
+
+    if (!setup)
+    {
+    	levelText.setFont(*asset_manager->getFont());
+    	levelText.setPosition(10, 10);
+
+    	scoreText.setFont(*asset_manager->getFont());
+    	scoreText.setPosition(300, 10);
+	}
+
+	levelText.setString("Level: " + std::to_string(asset_manager->selected_level));
+	scoreText.setString("Score: " + std::to_string(this->score));
+
+    window->draw(levelText);
+    window->draw(scoreText);
 
 	window->draw(timer);
 
+	//Render level tiles
     for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++) {
 			switch (scene[i][j]) {
@@ -232,7 +303,7 @@ void LevelScene::handleRender()
 	speed++;
 	snake->drawSnake();
 
-    if (speed == SPEED && !isGameOver)
+    if (speed == snakeSpeed && !isGameOver)
     {
         snake->moveSnake();
 		speed = 0;
@@ -247,6 +318,7 @@ void LevelScene::resetLevel()
 	delete snake;
 	clearLevel();
 	placePickups(PICKUPS);
+	this->score = 0;
 	snake = new Snake(window, asset_manager, scene);
 	start = clock();
 }

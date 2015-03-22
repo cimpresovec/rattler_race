@@ -1,8 +1,7 @@
 #ifndef LEVELSCENE_H
 #define LEVELSCENE_H
 
-#define SPEED 8
-#define PICKUPS 1
+#define PICKUPS 10
 
 #include "gameScene.h"
 #include "assetManager.h"
@@ -12,6 +11,15 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
+
+enum LevelDifficultySetting
+{
+    kLevelDifficultySettingEasy = 1,
+    kLevelDifficultySettingMedium = 2,
+    kLevelDifficultySettingHard = 3
+};
+
+typedef enum LevelDifficultySetting LevelDifficultySetting;
 
 class LevelScene : public GameScene
 {
@@ -35,11 +43,17 @@ private:
 	sf::RectangleShape tile;
 	Snake *snake;
     int speed;
+    unsigned int snakeSpeed;
+    unsigned int score;
+    LevelDifficultySetting difficultySetting;
 	sf::RectangleShape timer;
 	double timer_size;
 	time_t start;
 
     std::vector<Ball> balls;
+
+    //Sounds related
+    sf::Music background_music;
 
     bool isGameOver;
     void showGameOverMenu();
