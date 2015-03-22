@@ -46,9 +46,14 @@ private:
     unsigned int snakeSpeed;
     unsigned int score;
     LevelDifficultySetting difficultySetting;
+
+    //Level timer
+    sf::Clock clock;
+    int remainingTime;
 	sf::RectangleShape timer;
-	double timer_size;
-	time_t start;
+    double timer_size;
+    void initTimer();
+    void restartTimer();
 
     std::vector<Ball> balls;
 
