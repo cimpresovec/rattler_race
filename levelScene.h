@@ -32,7 +32,7 @@ public:
     void handleRender();
 
     void resetLevel();
-    void loadLevel(std::string level_name);
+    void loadLevel(std::string level_name, bool shouldPlacePickups = true);
     void clearLevel();
     void placePickups(int count = 10);
 

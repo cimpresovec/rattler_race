@@ -420,8 +420,9 @@ void LevelScene::resetLevel()
 	delete snake;
 
     //Reset level and score
-	clearLevel();
-	placePickups(PICKUPS);
+	const int level_index = asset_manager->selected_level;
+	std::string level = "level_" + std::to_string(level_index) + ".lvl";
+	this->loadLevel(level);
 	this->score = 0;
 
     //Reset balls
@@ -433,7 +434,7 @@ void LevelScene::resetLevel()
     restartTimer();
 }
 
-void LevelScene::loadLevel(std::string level_name)
+void LevelScene::loadLevel(std::string level_name, bool shouldPlacePickups)
 {
 	memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 	
@@ -448,6 +449,7 @@ void LevelScene::loadLevel(std::string level_name)
 
 	char c;
 	unsigned short arrayIndex = 0;
+	unsigned short mapPickups = 0;
 
 	while (file.good())
 	{
@@ -455,13 +457,17 @@ void LevelScene::loadLevel(std::string level_name)
 		if (c < '0' || c > '9')
 			continue;
 
+		if (c == '2')
+			mapPickups++;
+
 		this->scene[arrayIndex % HEIGHT][arrayIndex / WIDTH] = (int)(c - '0');
 		++arrayIndex;
 	}
 
 	file.close();
 
-    placePickups(PICKUPS);
+	if (shouldPlacePickups)
+    	placePickups(PICKUPS - mapPickups);
 }
 
 void LevelScene::clearLevel()
