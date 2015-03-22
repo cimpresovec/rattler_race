@@ -14,7 +14,7 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     next_scene = none;
 	speed = 0;
 	this->score = 0;
-	this->difficultySetting = kLevelDifficultySettingEasy;
+	this->difficultySetting = kLevelDifficultySettingMedium;
 
     this->isGameOver = false;
 
