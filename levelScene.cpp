@@ -19,13 +19,30 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     this->isGameOver = false;
 
 	// Set tile colors
+	const int level_index = asset_manager->selected_level;
     tile.setSize(sf::Vector2f(window->getSize().x / (double)WIDTH, (window->getSize().y-TOP_MARGIN) / (double)HEIGHT));
-    tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
+	if (level_index < 6)
+	{
+		tile.setTexture(asset_manager->getTexture("assets/tiles1-5.png"));
+	}
+	else if (level_index > 5 && level_index < 11)
+	{
+		tile.setTexture(asset_manager->getTexture("assets/tiles6-10.png"));
+	}
+	else if (level_index > 10 && level_index < 16)
+	{
+		tile.setTexture(asset_manager->getTexture("assets/tiles11-15.png"));
+	}
+	else //if (level_index > 15 && level_index < 21)
+	{
+		tile.setTexture(asset_manager->getTexture("assets/tiles16-20.png"));
+	}
+    
 
     //Reset the level
     memset(this->scene, 0, WIDTH * HEIGHT * sizeof(int));
 
-	const int level_index = asset_manager->selected_level;
+	
 	std::string level = "level_" + std::to_string(level_index) + ".lvl";
 	this->loadLevel(level);
 
