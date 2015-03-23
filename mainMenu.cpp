@@ -176,7 +176,7 @@ void MainMenu::handleInput()
 		((mouseY > scoreBtn.getPosition().y) && (mouseY < scoreBtn.getPosition().y + buttonSize))) {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			
+			next_scene = leaderboard;
 		}
 
 		scoreBtn.setTextureRect(sf::Rect<int>(256, 0, 256, 256));

@@ -14,7 +14,8 @@ enum GameSceneType
     main_menu = 2,
     level = 3,
     level_editor = 4,
-    setting = 5
+    setting = 5,
+    leaderboard = 6
 };
 
 //Abstract for game scene

@@ -181,7 +181,7 @@ void LevelScene::spawnBalls()
     balls.clear();
 
     //TODO set this to settings
-    int n_balls = 2;
+    int n_balls = 0;
 
     while (n_balls > 0)
     {
@@ -208,7 +208,7 @@ void LevelScene::spawnSnakes()
     enemy_snakes.clear();
 
     //TODO set this to settings
-    int n_snakes = 2;
+    int n_snakes = 0;
 
     while (n_snakes > 0)
     {
@@ -479,6 +479,46 @@ void LevelScene::handleRender()
 
 void LevelScene::resetLevel()
 {
+    //Let's check the score
+    std::fstream file;
+    file.open("data/leaderboard.snek", std::fstream::in | std::fstream::out);
+
+    if (file.is_open())
+    {
+        std::string buff;
+        std::string tmp;
+        std::string content = "";
+        int tmpScore;
+        bool writtenScore = false;
+
+        for (int i = 0; i < 5; ++i)
+        {
+            std::getline(file, buff, '\n');
+            tmp = buff.substr(buff.find_first_of(";") + 1);
+            tmpScore = std::atoi(tmp.c_str());
+
+            if (tmpScore >= this->score || writtenScore)
+            {
+                tmp = buff;
+            }
+            else
+            {
+                tmp = "player;" + std::to_string(this->score);
+                writtenScore = true;
+            }
+
+            content += tmp + "\n";
+        }
+        
+        file.seekg(0);
+        file.write(content.c_str(), content.length());
+        file.close();
+    }
+    else
+    {
+        printf("Error saving your high score.\r\n");
+    }
+
 	delete snake;
 
     //Reset level and score

@@ -3,6 +3,7 @@
 #include "levelScene.h"
 #include "levelEditorScene.h"
 #include "settingsScene.h"
+#include "leaderboardScene.h"
 #include "assetManager.h"
 
 int main()
@@ -67,6 +68,13 @@ int main()
             case setting:
             {
                 GameScene *new_scene = new SettingsScene(window, event, asset_manager);
+                delete current_scene;
+                current_scene = new_scene;
+                break;
+            }
+            case leaderboard:
+            {
+                GameScene *new_scene = new LeaderboardScene(window, event, asset_manager);
                 delete current_scene;
                 current_scene = new_scene;
                 break;
