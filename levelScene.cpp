@@ -225,8 +225,8 @@ void LevelScene::handleLogic()
 {
     if (isGameOver)
         return;
-    else
-        timerHandler();
+
+    timerHandler();
 
     //Ball and enemy snake movement
     if (snake->has_moved)
@@ -246,8 +246,6 @@ void LevelScene::handleLogic()
         }
         snake->has_moved = false;
     }
-
-    if (isGameOver) return;
 
     //If user pressed a key we move
     if (eventMove)
