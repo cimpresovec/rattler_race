@@ -170,15 +170,13 @@ int Snake::detectCollision()
 
     if ((currentTilePosition == 0) || (currentTilePosition == -2)) //collision with wall
     {
-        std::cout << currentTilePosition << '\n';
         return 0;
     }
     else if (snakeSelfCollision(getSnakeTileX(0), getSnakeTileY(0))) //self collision
     {
-        std::cout << currentTilePosition << "SELF \n";
         return 0;
     }
-    else if (currentTilePosition >= 2) //eat item
+    else if (currentTilePosition == 2) //Eat candy item
     {
         this->addPart();
         scene[getSnakeTileX(0)][getSnakeTileY(0)] = -1;
@@ -187,8 +185,18 @@ int Snake::detectCollision()
 
         return 1;
     }
+    else if (currentTilePosition == 3) //Eat special item
+    {
+        scene[getSnakeTileX(0)][getSnakeTileY(0)] = -1;
+
+        eatPickup();
+
+        return 3;
+    }
     else if (pickups == 0 && getSnakeTileX(0) == (int)WIDTH / 2 && getSnakeTileY(0) == 0) //level completed
+    {
         return 2;
+    }
 
     return -1;
 }
@@ -257,6 +265,12 @@ int Snake::getSnakeTileX(int index)
 int Snake::getSnakeTileY(int index)
 {
     return (int)snake[index].position.y;
+}
+
+void Snake::resetSize()
+{
+    while (snake.size() > 3)
+        snake.pop_back();
 }
 
 void Snake::remoaveHead() {

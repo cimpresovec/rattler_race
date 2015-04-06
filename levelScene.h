@@ -36,6 +36,7 @@ public:
     void loadLevel(std::string level_name, bool shouldPlacePickups = true);
     void clearLevel();
     void placePickups(int count = 10);
+    void placeSpecialPickups(int count = 2);
 
 	void timerHandler();
 
@@ -68,6 +69,8 @@ private:
 	void saveTheHighestCompletedLvl(int lvl);
     void spawnBalls();
     void spawnSnakes();
+
+    void specialEffect();
 
     bool eventMove;
 };

@@ -1,8 +1,8 @@
 #include "levelScene.h"
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <ctime>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 
 #define LEVEL_TIME 30000
 
@@ -79,6 +79,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     }
 
     eventMove = false;
+
+    srand(time(NULL));
 }
 
 LevelScene::~LevelScene()
@@ -302,7 +304,11 @@ void LevelScene::handleLogic()
 
     	this->score += this->difficultySetting;
     }
-    if (collisionResult == 2) //level completed
+    else if (collisionResult == 3) //Ate a special item - apply a random effect
+    {
+        this->specialEffect();
+    }
+    else if (collisionResult == 2) //level completed
     {
         delete snake;
 
@@ -570,7 +576,10 @@ void LevelScene::loadLevel(std::string level_name, bool shouldPlacePickups)
 	file.close();
 
 	if (shouldPlacePickups)
+    {
     	placePickups(PICKUPS - mapPickups);
+        placeSpecialPickups();
+    }
 }
 
 void LevelScene::clearLevel()
@@ -603,6 +612,80 @@ void LevelScene::placePickups(int count)
 
 		++loopCounter;
 	}
+}
+
+void LevelScene::placeSpecialPickups(int count)
+{
+    int loopCounter = 0;
+    while (count > 0 && loopCounter < 1000000)
+    {
+        const int x = rand() % WIDTH;
+        const int y = rand() % WIDTH;
+        if (this->scene[y][x] == 1)
+        {
+            this->scene[y][x] = 3;
+            count--;
+        }
+
+        ++loopCounter;
+    }
+}
+
+void LevelScene::specialEffect()
+{
+    const int effectsCount = 6; //How many different effects are we currently supporting
+    int effect = rand() % effectsCount;
+
+    switch (effect)
+    {
+        case 0: //Walls disappear
+        {
+            for (int i = 1; i < WIDTH - 1; ++i)
+                for (int j = 1; j < HEIGHT - 1; ++j)
+                    if (this->scene[i][j] == 0)
+                        this->scene[i][j] = 1;
+        }
+        break;
+        case 1: //Make the snake shorter
+        {
+                this->snake->resetSize();
+        }
+        break;
+        case 2: //Reset timer
+        {
+            this->restartTimer();
+        }
+        break;
+        case 3: //Increment snake speed
+        {
+            if (this->snakeSpeed - 2 > 4)
+                this->snakeSpeed -= 2;
+        }
+        break;
+        case 4: //Decrement snake speed
+        {
+            if (this->snakeSpeed + 2 < 16)
+                this->snakeSpeed += 2;
+        }
+        break;
+        case 5: //Give some bouns points
+        {
+            this->score += 20;
+        }
+        break;
+        default:
+        break;
+    }
+
+    static sf::SoundBuffer buffer;
+    static sf::Sound sound;
+    if (!buffer.getSampleCount())
+    {
+        buffer.loadFromFile("assets/sounds/bouns_pickup.wav");
+        sound.setBuffer(buffer);
+    }
+        
+    sound.play();
 }
 
 void LevelScene::saveTheHighestCompletedLvl(int lvl) {
