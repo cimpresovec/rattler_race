@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     settingsScene.cpp \
     snake.cpp \
     ball.cpp \
-    enemySnake.cpp
+    enemySnake.cpp \
+    leaderboardScene.cpp
 
 HEADERS += \
     gameScene.h \
@@ -26,5 +27,6 @@ HEADERS += \
     settingsScene.h \
     snake.h \
     ball.h \
-    enemySnake.h
+    enemySnake.h \
+    leaderboardScene.h
 
