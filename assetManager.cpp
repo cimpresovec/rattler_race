@@ -7,6 +7,8 @@ AssetManager::AssetManager()
     font = new sf::Font();
     if (!font->loadFromFile("assets/Ubuntu-L.ttf"))
         std::cerr << "Can't load font: Ubuntu-L.ttf\n";
+	nSnakes = 0;
+	nBalls = 0;
 }
 
 AssetManager::~AssetManager()
@@ -44,4 +46,20 @@ sf::Texture* AssetManager::getTexture(const std::string name)
 sf::Font* AssetManager::getFont()
 {
     return font;
+}
+
+void AssetManager::setNSnakes(int N) {
+	nSnakes = N;
+}
+
+int AssetManager::getNSnakes() {
+	return nSnakes;
+}
+
+void AssetManager::setNBalls(int N) {
+	nBalls = N;
+}
+
+int AssetManager::getNBalls(){
+	return nBalls;
 }

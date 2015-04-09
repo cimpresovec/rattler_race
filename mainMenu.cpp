@@ -7,6 +7,8 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
     this->event = event;
     next_scene = none;
 
+	drziClick = false;
+
     buttonSize = 0;
 	spaceBetween = 0;
 
@@ -21,8 +23,6 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	}
 	else
 		avalibleLvls = 1;
-
-	numberOfBalls = 0;
 
 
 	// Dvet gumbov pa 1/10 gumba razmaka
@@ -60,7 +60,7 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	ballsText.setColor(sf::Color(237, 218, 196, 255));
 	ballsText.setFont(*asset_manager->getFont());
 	ballsText.setPosition(ballsBtn.getPosition().x + buttonSize/2 - 8.5, ballsBtn.getPosition().y + buttonSize / 3 - 0.5);
-	ballsText.setString(std::to_string(numberOfBalls));
+	ballsText.setString(std::to_string(asset_manager->getNBalls()));
 
 	// Lvl button and text
 	for (int i = 0; i < NUMBER_OF_LVLS; i++){
@@ -190,7 +190,17 @@ void MainMenu::handleInput()
 		((mouseY > ballsBtn.getPosition().y) && (mouseY < ballsBtn.getPosition().y + buttonSize))) {
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-
+			if (!drziClick){
+				drziClick = true;
+				if (asset_manager->getNBalls() < 3)
+					asset_manager->setNBalls(asset_manager->getNBalls() + 1);
+				else
+					asset_manager->setNBalls(0);
+				ballsText.setString(std::to_string(asset_manager->getNBalls()));
+			}
+		}
+		else {
+			drziClick = false;
 		}
 
 		ballsBtn.setTextureRect(sf::Rect<int>(256, 512, 256, 256));
