@@ -170,7 +170,7 @@ void LevelScene::handleInput()
         {
             if (event->type == sf::Event::TextEntered)
             {
-                if (event->text.unicode < 128)
+                if (event->text.unicode > 65 && event->text.unicode < 122)
                 {
                     userName += static_cast<char>(event->text.unicode);
                 }
@@ -185,7 +185,7 @@ void LevelScene::spawnBalls()
     balls.clear();
 
     //TODO set this to settings
-    int n_balls = 0;
+    int n_balls = asset_manager->getNBalls();
 
     while (n_balls > 0)
     {
@@ -212,7 +212,7 @@ void LevelScene::spawnSnakes()
     enemy_snakes.clear();
 
     //TODO set this to settings
-    int n_snakes = 0;
+    int n_snakes = asset_manager->getNSnakes();
 
     while (n_snakes > 0)
     {
