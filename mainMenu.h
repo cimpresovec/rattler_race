@@ -32,7 +32,7 @@ private:
 
 	int avalibleLvls;
 
-	int numberOfBalls;
+	bool drziClick;
 
 	//Sounds related
     sf::Music background_music;
