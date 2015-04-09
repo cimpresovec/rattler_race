@@ -80,6 +80,9 @@ private:
     void pushView();
     bool pushStart;
 
+    void wobbleView();
+    bool wobbleStart;
+
     bool eventMove;
 };
 

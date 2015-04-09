@@ -77,6 +77,9 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
     hudView.setViewport(sf::FloatRect(0, 0, 1.f, TOP_MARGIN/661.f));
     tileView.setViewport(sf::FloatRect(0, TOP_MARGIN/661.f, 1.f, (661-TOP_MARGIN)/661.f));
 
+    pushStart = false;
+    wobbleStart = false;
+
     srand(time(NULL));
 }
 
@@ -312,6 +315,7 @@ void LevelScene::handleLogic()
     }
     else if (collisionResult == 3) //Ate a special item - apply a random effect
     {
+        wobbleStart = true;
         this->specialEffect();
     }
     else if (collisionResult == 2) //level completed
@@ -363,6 +367,30 @@ void LevelScene::pushView()
     }
 }
 
+//SORSERY
+void LevelScene::wobbleView()
+{
+    static int r = 0;
+    static bool dir = true;
+
+    if (wobbleStart)
+    {
+        if (dir)
+        {
+            r+=2;
+            if (r >= 4) dir = false;
+            if (r == 0) wobbleStart = false;
+        }
+        else
+        {
+            r-=2;
+            if (r <= -4) dir = true;
+        }
+
+        tileView.setRotation(r);
+    }
+}
+
 void LevelScene::handleRender()
 {
     window->clear();
@@ -391,6 +419,7 @@ void LevelScene::handleRender()
 	window->draw(timer);
 
     pushView();
+    wobbleView();
     window->setView(tileView);
 
 	//Render level tiles
@@ -495,7 +524,7 @@ void LevelScene::handleRender()
                 gameOverText.setPosition(220, 240);
 
                 userText.setFont(*asset_manager->getFont());
-                userText.setPosition(170, 400);
+                userText.setPosition(270, 400);
 
                 underlay.setPosition(120, 200);
                 underlay.setSize(sf::Vector2f(360, 300));
