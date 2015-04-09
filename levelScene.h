@@ -72,6 +72,8 @@ private:
 
     void specialEffect();
 
+    std::string userName;
+
     bool eventMove;
 };
 

@@ -70,6 +70,8 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 
     eventMove = false;
 
+    userName = "";
+
     srand(time(NULL));
 }
 
@@ -123,7 +125,7 @@ void LevelScene::handleInput()
         	{
             	next_scene = main_menu;
             }
-            else if (event->key.code == sf::Keyboard::R && isGameOver)
+            else if (event->key.code == sf::Keyboard::Return && isGameOver)
             {
                 isGameOver = false;
 				animation = true;
@@ -164,6 +166,16 @@ void LevelScene::handleInput()
 				}
 			}
 		}
+        else
+        {
+            if (event->type == sf::Event::TextEntered)
+            {
+                if (event->text.unicode < 128)
+                {
+                    userName += static_cast<char>(event->text.unicode);
+                }
+            }
+        }
     }
 }
 
@@ -441,23 +453,31 @@ void LevelScene::handleRender()
 		else {
 			static bool gameOverSetup = false;
 			static sf::RectangleShape underlay;
-			static sf::Text gameOverText;
+            static sf::Text gameOverText;
+            static sf::Text userText;
 
 			if (!gameOverSetup)
-			{
-				gameOverText.setFont(*asset_manager->getFont());
-				gameOverText.setString("GAME OVER\n  R to restart");
-				gameOverText.setPosition(190, 240);
+            {
+                gameOverText.setFont(*asset_manager->getFont());
+                gameOverText.setString("Game Over!\nEnter name:");
+                gameOverText.setColor(sf::Color(237, 218, 196));
+                gameOverText.setPosition(220, 240);
 
-				underlay.setPosition(135, 200);
-				underlay.setSize(sf::Vector2f(300, 150));
+                userText.setFont(*asset_manager->getFont());
+                userText.setPosition(170, 400);
+
+                underlay.setPosition(120, 200);
+                underlay.setSize(sf::Vector2f(360, 300));
 				underlay.setFillColor(sf::Color(0, 0, 0, 180));
-				gameOverSetup = true;
+                gameOverSetup = true;
 			}
+
+            userText.setString(userName);
 
 			snake->drawSnake();
 			window->draw(underlay);
 			window->draw(gameOverText);	
+            window->draw(userText);
 			window->display();
 		}
 
@@ -497,7 +517,7 @@ void LevelScene::resetLevel()
             }
             else
             {
-                tmp = "player;" + std::to_string(this->score);
+                tmp = userName + ';' + std::to_string(this->score);
                 writtenScore = true;
             }
 
@@ -512,7 +532,7 @@ void LevelScene::resetLevel()
     {
         printf("Error saving your high score.\r\n");
     }
-
+    userName = "";
 	delete snake;
 
     //Reset level and score
