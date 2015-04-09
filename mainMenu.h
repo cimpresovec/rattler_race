@@ -43,6 +43,10 @@ private:
 	sf::RectangleShape lvlEditorBtn;
 	sf::RectangleShape scoreBtn;
 	sf::RectangleShape ballsBtn;
+	sf::RectangleShape snakesBtn;
+
+	sf::Text difficultyText;
+	sf::Text snakesText;
 	sf::Text ballsText;
 	sf::Text lvlText;
 	sf::Text title[2];

@@ -62,6 +62,24 @@ MainMenu::MainMenu(sf::RenderWindow *window, sf::Event *event, AssetManager *man
 	ballsText.setPosition(ballsBtn.getPosition().x + buttonSize/2 - 8.5, ballsBtn.getPosition().y + buttonSize / 3 - 0.5);
 	ballsText.setString(std::to_string(asset_manager->getNBalls()));
 
+	// Snake button
+	snakesBtn.setSize(sf::Vector2f(buttonSize, buttonSize));
+	snakesBtn.setTexture(asset_manager->getTexture("assets/menu2.png"));
+	snakesBtn.setTextureRect(sf::Rect<int>(0, 1024, 256, 256));
+	snakesBtn.setPosition(rightBotX - buttonSize * 3 - (spaceBetween / 3) * 3, rightBotY);
+
+	// Snake text
+	snakesText.setColor(sf::Color(237, 218, 196, 255));
+	snakesText.setFont(*asset_manager->getFont());
+	snakesText.setPosition(snakesBtn.getPosition().x + buttonSize / 2 - 8.5, snakesBtn.getPosition().y + buttonSize / 3 - 0.5);
+	snakesText.setString(std::to_string(asset_manager->getNSnakes()));
+
+	// Difficulty text
+	difficultyText.setColor(sf::Color(237, 218, 196, 255));
+	difficultyText.setFont(*asset_manager->getFont());
+	difficultyText.setPosition(snakesBtn.getPosition().x + buttonSize / 2 - 8.5 - buttonSize, snakesBtn.getPosition().y + buttonSize / 3 - 0.5);
+	difficultyText.setString("N");
+
 	// Lvl button and text
 	for (int i = 0; i < NUMBER_OF_LVLS; i++){
 		lvlBtn[i].setSize(sf::Vector2f(buttonSize, buttonSize));
@@ -208,6 +226,45 @@ void MainMenu::handleInput()
 	else {
 		ballsBtn.setTextureRect(sf::Rect<int>(0, 512, 256, 256));
 	}
+
+	// Snakes mouse detection
+	if (((mouseX > snakesBtn.getPosition().x) && (mouseX < snakesBtn.getPosition().x + buttonSize)) &&
+		((mouseY > snakesBtn.getPosition().y) && (mouseY < snakesBtn.getPosition().y + buttonSize))) {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (!drziClick){
+				drziClick = true;
+				if (asset_manager->getNSnakes() < 3)
+					asset_manager->setNSnakes(asset_manager->getNSnakes() + 1);
+				else
+					asset_manager->setNSnakes(0);
+				snakesText.setString(std::to_string(asset_manager->getNSnakes()));
+			}
+		}
+		else {
+			drziClick = false;
+		}
+
+		snakesBtn.setTextureRect(sf::Rect<int>(256, 1024, 256, 256));
+	}
+	else {
+		snakesBtn.setTextureRect(sf::Rect<int>(0, 1024, 256, 256));
+	}
+
+	// Snakes mouse detection
+	if (((mouseX > snakesBtn.getPosition().x - buttonSize) && (mouseX < snakesBtn.getPosition().x)) &&
+		((mouseY > snakesBtn.getPosition().y) && (mouseY < snakesBtn.getPosition().y + buttonSize))) {
+
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (!drziClick){
+				std::cout << "Drek" << std::endl;
+			}
+			drziClick = true;
+		}
+		else {
+			drziClick = false;
+		}
+	}
 }
 
 void MainMenu::handleLogic()
@@ -251,6 +308,13 @@ void MainMenu::handleRender()
 	// Ball button
 	window->draw(ballsBtn);
 	window->draw(ballsText);
+
+	// Snakes button
+	window->draw(snakesBtn);
+	window->draw(snakesText);
+
+	// Difficulty text
+	window->draw(difficultyText);
 
 	// Draw tittle
 	window->draw(title[0]);
