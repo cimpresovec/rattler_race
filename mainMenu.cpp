@@ -218,6 +218,7 @@ void MainMenu::handleLogic()
 void MainMenu::handleRender()
 {
     window->clear();
+    window->setView(window->getDefaultView());
 
 	// Menu background
 	window->draw(background);

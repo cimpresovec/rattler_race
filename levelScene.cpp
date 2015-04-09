@@ -72,6 +72,11 @@ LevelScene::LevelScene(sf::RenderWindow *window, sf::Event *event, AssetManager 
 
     userName = "";
 
+    tileView.reset(sf::FloatRect(0, TOP_MARGIN, 561, 661.f-TOP_MARGIN));
+    hudView.reset(sf::FloatRect(0, 0, 561, TOP_MARGIN));
+    hudView.setViewport(sf::FloatRect(0, 0, 1.f, TOP_MARGIN/661.f));
+    tileView.setViewport(sf::FloatRect(0, TOP_MARGIN/661.f, 1.f, (661-TOP_MARGIN)/661.f));
+
     srand(time(NULL));
 }
 
@@ -300,6 +305,7 @@ void LevelScene::handleLogic()
     		sound.setBuffer(buffer);
     	}
 
+        pushStart = true;
     	sound.play();
 
     	this->score += this->difficultySetting;
@@ -337,9 +343,31 @@ void LevelScene::handleLogic()
     }
 }
 
+//Ne pitej sorsery
+void LevelScene::pushView()
+{
+    static int n = 0;
+
+    if (pushStart)
+    {
+        if (n < 5) tileView.zoom(1.01);
+        else tileView.zoom(0.99);
+        n++;
+
+        if (n == 10)
+        {
+            n = 0;
+            pushStart = false;
+            tileView.reset(sf::FloatRect(0, TOP_MARGIN, 561, 661.f-TOP_MARGIN));
+        }
+    }
+}
+
 void LevelScene::handleRender()
 {
     window->clear();
+
+    window->setView(hudView);
 
     //Draw level info
     static sf::Text levelText;
@@ -361,6 +389,9 @@ void LevelScene::handleRender()
     window->draw(levelText);
     window->draw(scoreText);
 	window->draw(timer);
+
+    pushView();
+    window->setView(tileView);
 
 	//Render level tiles
     for (int i = 0; i < HEIGHT; i++){
@@ -487,6 +518,8 @@ void LevelScene::handleRender()
 		//Draw snake
 		snake->drawSnake();
 	}
+
+    window->setView(window->getDefaultView());
 
     window->display();
 }

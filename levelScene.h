@@ -74,6 +74,12 @@ private:
 
     std::string userName;
 
+    sf::View tileView;
+    sf::View hudView;
+
+    void pushView();
+    bool pushStart;
+
     bool eventMove;
 };
 
