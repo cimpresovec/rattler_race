@@ -9,6 +9,8 @@
 #include <vector>
 #include <iostream>
 
+#define WINDOW_WIDTH 561
+
 class LeaderboardScene : public GameScene
 {
 private:
@@ -23,6 +25,7 @@ public:
     void handleRender();
 
     std::vector<std::string> getLeaderboard(std::string filename = "leaderboard.snek");
+    sf::RectangleShape background;
 };
 
 #endif // LEADERBOARDSCENE_H

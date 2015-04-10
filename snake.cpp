@@ -13,7 +13,7 @@ Snake::Snake(sf::RenderWindow *window, AssetManager *manager, int scene[HEIGHT][
     this->pickups = 0;
     for (int i = 1; i < HEIGHT - 1; i++)
         for (int j = 1; j < WIDTH - 1; j++)
-            if (scene[i][j] >= 2)
+            if (scene[i][j] == 2)
                 this->pickups++;
 
     has_moved = false;
@@ -156,9 +156,10 @@ void Snake::drawSnake()
 	}
 }
 
-void Snake::eatPickup()
+void Snake::eatPickup(int pickupIndex)
 {
-    pickups--;
+    if (pickupIndex == 2)
+        pickups--;
 
     if (pickups == 0)
         scene[(WIDTH - 1) / 2][0] = 1;
@@ -179,17 +180,15 @@ int Snake::detectCollision()
     else if (currentTilePosition == 2) //Eat candy item
     {
         this->addPart();
+        eatPickup(scene[getSnakeTileX(0)][getSnakeTileY(0)]);
         scene[getSnakeTileX(0)][getSnakeTileY(0)] = -1;
-
-        eatPickup();
 
         return 1;
     }
     else if (currentTilePosition == 3) //Eat special item
     {
+        eatPickup(scene[getSnakeTileX(0)][getSnakeTileY(0)]);
         scene[getSnakeTileX(0)][getSnakeTileY(0)] = -1;
-
-        eatPickup();
 
         return 3;
     }

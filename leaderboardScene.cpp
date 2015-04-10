@@ -10,10 +10,7 @@ LeaderboardScene::LeaderboardScene(sf::RenderWindow *window, sf::Event *event, A
     this->topPlayers = this->getLeaderboard();
 }
 
-LeaderboardScene::~LeaderboardScene()
-{
-
-}
+LeaderboardScene::~LeaderboardScene() { }
 
 void LeaderboardScene::handleInput()
 {
@@ -41,15 +38,39 @@ void LeaderboardScene::handleRender()
 {
     window->clear();
 
-    //CRAP FONT TEST
-    sf::Text text("Leaderboard", *asset_manager->getFont());
+    //Background
+    background.setSize((sf::Vector2f)window->getSize());
+    background.setTexture(asset_manager->getTexture("assets/background.png"));
+    window->draw(background);
+
+    //Title
+    sf::Text text("Leaderboards", *asset_manager->getFont());
+    text.setCharacterSize(70);
+    text.setPosition(WINDOW_WIDTH / 2 - text.getGlobalBounds().width / 2, 10);
+    text.setColor(sf::Color(60, 0, 0, 255));
     window->draw(text);
+
+    //Leaderboards
+    text.setColor(sf::Color(140, 10, 10, 255));
 
     short i = 0;
     for (std::vector<std::string>::iterator it = this->topPlayers.begin(); it != this->topPlayers.end(); ++it)
     {
+        if (i == 0) //First place
+        {
+            text.setString(*it);
+            text.setCharacterSize(60);
+            text.setPosition(WINDOW_WIDTH / 2 - text.getGlobalBounds().width / 2, 110);
+            window->draw(text);
+
+            //Set font size for other results
+            text.setCharacterSize(30);
+            ++i;
+            continue;
+        }
+
         text.setString(*it);
-        text.setPosition(20, i * 50 + 50);
+        text.setPosition(WINDOW_WIDTH / 2 - text.getGlobalBounds().width / 2, i * 50 + 150);
         window->draw(text);
 
         ++i;
@@ -80,7 +101,7 @@ std::vector<std::string> LeaderboardScene::getLeaderboard(std::string filename)
             continue;
 
         std::size_t pos = buff.find_first_of(";");
-        buff.replace(pos, 1, ": ");
+        buff.replace(pos, 1, " - ");
         vec.push_back(buff);
     }
 

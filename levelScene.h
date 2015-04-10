@@ -52,6 +52,7 @@ private:
     //Level timer
     sf::Clock clock;
     int remainingTime;
+    int levelTime;
 	sf::RectangleShape timer;
     double timer_size;
     void initTimer();

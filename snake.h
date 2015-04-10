@@ -28,7 +28,7 @@ public:
 
     bool has_moved;
 
-    void eatPickup();
+    void eatPickup(int pickupIndex);
     void resetSize();
 
     struct SnakeTile

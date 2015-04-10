@@ -90,11 +90,12 @@ LevelScene::~LevelScene()
 
 void LevelScene::initTimer()
 {
+    levelTime = LEVEL_TIME + asset_manager->selected_level * 500;
     timer_size = window->getSize().x - 2 * tile.getSize().x;
     timer.setSize(sf::Vector2f(timer_size, tile.getSize().y));
     timer.setFillColor(sf::Color(68, 183, 64));
     timer.setPosition(sf::Vector2f(tile.getSize().x, TOP_MARGIN - 2 * tile.getSize().y));
-    remainingTime = LEVEL_TIME;
+    remainingTime = levelTime;
     clock.restart();
 }
 
@@ -106,8 +107,8 @@ void LevelScene::restartTimer()
 
 void LevelScene::timerHandler()
 {
-    remainingTime = LEVEL_TIME - clock.getElapsedTime().asMilliseconds();
-    timer.setSize(sf::Vector2f(timer_size * (double)remainingTime / (double)LEVEL_TIME, tile.getSize().y));
+    remainingTime = levelTime - clock.getElapsedTime().asMilliseconds();
+    timer.setSize(sf::Vector2f(timer_size * (double)remainingTime / (double)levelTime, tile.getSize().y));
 
     if (remainingTime <= 0)
         isGameOver = true;
@@ -261,7 +262,7 @@ void LevelScene::handleLogic()
             if (it->ate_apple)
             {
                 it->ate_apple = false;
-                snake->eatPickup();
+                snake->eatPickup(scene[snake->getSnakeTileX(0)][snake->getSnakeTileY(0)]);
             }
         }
         snake->has_moved = false;
@@ -497,7 +498,7 @@ void LevelScene::handleRender()
 
 				for (int i = 0; i < HEIGHT; i++){
 					for (int j = 0; j < WIDTH; j++) {
-						switch (scene[i][j]) {
+                        switch (scene[i][j]) {
 						case 0:
 							tile.setPosition(tile.getSize().x * i + tmp, tile.getSize().y * j + tmp + TOP_MARGIN);
 							window->draw(tile);
