@@ -525,7 +525,7 @@ void LevelScene::handleRender()
                 gameOverText.setPosition(220, 240);
 
                 userText.setFont(*asset_manager->getFont());
-                userText.setPosition(270, 400);
+                userText.setPosition(290, 400);
 
                 underlay.setPosition(120, 200);
                 underlay.setSize(sf::Vector2f(360, 300));
@@ -534,6 +534,7 @@ void LevelScene::handleRender()
 			}
 
             userText.setString(userName);
+            userText.setPosition(290 - userText.getGlobalBounds().width / 2, 400);
 
 			snake->drawSnake();
 			window->draw(underlay);
