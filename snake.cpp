@@ -161,6 +161,8 @@ void Snake::eatPickup(int pickupIndex)
     if (pickupIndex == 2)
         pickups--;
 
+    //std::cout << pickups << '\n';
+
     if (pickups == 0)
         scene[(WIDTH - 1) / 2][0] = 1;
 }

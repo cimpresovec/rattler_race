@@ -262,7 +262,7 @@ void LevelScene::handleLogic()
             if (it->ate_apple)
             {
                 it->ate_apple = false;
-                snake->eatPickup(scene[snake->getSnakeTileX(0)][snake->getSnakeTileY(0)]);
+                snake->eatPickup(2);
             }
         }
         snake->has_moved = false;

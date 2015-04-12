@@ -257,7 +257,7 @@ void MainMenu::handleInput()
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			if (!drziClick){
-				std::cout << "Drek" << std::endl;
+                //std::cout << "Drek" << std::endl;
 			}
 			drziClick = true;
 		}
